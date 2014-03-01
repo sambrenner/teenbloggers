@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      body, a { color: #666; }
+
+      .input { color: #CCC; }
+      .response { color: #666; }
+
+      #chat_window { border: 1px solid #666; height: 300px; overflow: scroll; }
+      #chat_submit { position: absolute; left: -9999px; }
+    </style>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <script>
+      var $chatInput, $chatWindow, $chatForm;
+
+      var cacheSelectors = function() {
+        $chatInput = $('#chat_input');
+        $chatWindow = $('#chat_window');
+        $chatForm = $('form');
+      };
+
+      var addStringToChatWindow = function(className, string) {
+        $chatWindow.append($('<li class="' + className + '"></li>').append(string));
+        $chatWindow.scrollTop(100000);
+      };
+
+      var bindChatInteraction = function() {
+        $chatForm.on('submit', function(e) {
+          e.preventDefault();
+
+          var input = $chatInput.val();
+
+          addStringToChatWindow('input', input);
+          $chatInput.val('');
+
+          //respond
+          $.ajax({
+            url: 'https://gdata.youtube.com/feeds/api/videos?q=' + encodeURIComponent(input) + '&max-results=1&alt=json&v=2'
+          }).done(function(data) {
+            $.ajax({
+              url: data.feed.entry[0].gd$comments.gd$feedLink.href + '&alt=json'
+            }).done(function(comments) {
+              var numComments = comments.feed.entry.length;
+              addStringToChatWindow('response', comments.feed.entry[Math.floor(Math.random() * numComments)].content.$t);
+            });
+          });
+        });
+      };
+
+      var init = function() {
+        cacheSelectors();
+        bindChatInteraction();
+        $chatInput.focus();
+      };
+
+      $(document).ready(function() {
+        init();
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>youtube comment bot</h1>
+    
+    <form>
+      <input id="chat_input" type="text" placeholder="say something" />
+      <input id="chat_submit" type="submit" label="go" />
+    </form>
+
+    <ul id="chat_window">
+    </ul>
+
+    <h2><a href="index.html">see all bots</a></h2>
+  </body>
+</html>
