@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      body, a { color: #666; }
+
+      .input { color: #CCC; }
+      .response { color: #666; }
+
+      #chat_window { border: 1px solid #666; height: 300px; overflow: scroll; }
+    </style>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <script>
+      var $chatInput, $chatWindow, $chatForm;
+
+      var cacheSelectors = function() {
+        $chatInput = $('#chat_input');
+        $chatWindow = $('#chat_window');
+        $chatForm = $('form');
+      };
+
+      var bindChatInteraction = function() {
+        $chatForm.on('submit', function(e) {
+          e.preventDefault();
+
+          $chatWindow.append($('<li class="input"></li>').append($chatInput.val()));
+          $chatInput.val('');
+          $chatWindow.scrollTop(100000);
+
+          //respond
+        });
+      };
+
+      var init = function() {
+        cacheSelectors();
+        bindChatInteraction();
+      };
+
+      $(document).ready(function() {
+        init();
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>bot name</h1>
+    
+    <form>
+      <input id="chat_input" type="text" placeholder="say something" />
+      <input id="chat_submit" type="submit" label="go" />
+    </form>
+
+    <ul id="chat_window">
+    </ul>
+
+    <h2><a href="index.html">see all bots</a></h2>
+  </body>
+</html>
