@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      body, a { color: #666; }
+
+      .input { color: #CCC; }
+      .response { color: #666; }
+
+      #lj_user_form { border-bottom: 1px solid #666; margin-bottom: 10px; padding-bottom: 10px; }
+
+      #chat_window { border: 1px solid #666; height: 300px; overflow: scroll; }
+    </style>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <script>
+      var $chatInput, $chatWindow, $chatForm, $ljForm, $ljInput;
+
+      var cacheSelectors = function() {
+        $chatInput = $('#chat_input');
+        $chatWindow = $('#chat_window');
+        $chatForm = $('#chat_form');
+        $ljForm = $('#lj_user_form');
+        $ljInput = $('#lj_input');
+      };
+
+      var bindLJLoading = function() {
+        $ljForm.on('submit', function(e) {
+          e.preventDefault();
+
+          var ljUserName = $ljInput.val();
+          var ljRssUrl = 'http://' + ljUserName + '.livejournal.com/data/rss';
+
+          $.ajax({
+            url: ljRssUrl
+          }).done(function(e) {
+            console.log(e);
+          });
+        });
+      };
+
+      var addStringToChatWindow = function(className, string) {
+        $chatWindow.append($('<li class="' + className + '"></li>').append(string));
+        $chatWindow.scrollTop(100000);
+      };
+
+      var bindChatInteraction = function() {
+        $chatForm.on('submit', function(e) {
+          e.preventDefault();
+
+          var input = $chatInput.val();
+
+          addStringToChatWindow('input', input);
+          $chatInput.val('');
+
+          //respond
+        });
+      };
+
+      var init = function() {
+        cacheSelectors();
+        bindLJLoading();
+        bindChatInteraction();
+        $chatInput.focus();
+      };
+
+      $(document).ready(function() {
+        init();
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>bot name</h1>
+    <form id="lj_user_form">
+      <input id="lj_input" type="text" placeholder="enter livejournal username" />
+      <!--or
+      <select id="lj_select">
+        <option>need-him-so-bad</option>
+        <option>muffins-sniffum</option>
+      </select>-->
+
+      <input id="lj_submit" type="submit" value="select" />
+    </form>
+
+    <form id="chat_form">
+      <input id="chat_input" type="text" placeholder="say something" />
+      <input id="chat_submit" type="submit" value="say it!" />
+    </form>
+
+    <ul id="chat_window">
+    </ul>
+
+    <h2><a href="index.html">see all bots</a></h2>
+  </body>
+</html>
