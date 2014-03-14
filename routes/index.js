@@ -17,17 +17,36 @@ exports.pos = function(req, res){
 
 exports.loadLJ = function(req, res) {
   var request = require('request');
+  var stripper = require('htmlstrip-native');
   var xml2js = require('xml2js');
   var parser = new xml2js.Parser();
+  var username = req.params.username;
 
-  request('http://' + req.params.username + '.livejournal.com/data/rss', function(e, r, b) {
+  request('http://' + username + '.livejournal.com/data/rss', function(e, r, b) {
     if (!e && r.statusCode == 200) {
       parser.parseString(b, function(e, r) {
         var items = r.rss.channel[0].item;
+        var corpus = '';
+        
         for(var i=0; i<items.length; i++) {
           var item = items[i];
-          console.log(item.description[0]);
+          var stripOptions = {
+            include_script: false,
+            include_style: false,
+            compact_whitespace: true
+          };
+
+          var processedText = stripper.html_strip(item.description[0], stripOptions);
+
+          corpus += (processedText + ' ');
         }
+
+        var ljInfo = {};
+        ljInfo.username = username;
+        ljInfo.corpus = corpus;
+
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(ljInfo));
       });
     }
   });

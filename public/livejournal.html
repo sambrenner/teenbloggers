@@ -30,12 +30,13 @@
           e.preventDefault();
 
           var ljUserName = $ljInput.val();
-          var ljRssUrl = 'http://' + ljUserName + '.livejournal.com/data/rss';
+          var ljRssUrl = '/lj/' + ljUserName;
 
           $.ajax({
-            url: ljRssUrl
-          }).done(function(e) {
-            console.log(e);
+            url: ljRssUrl,
+            success: function(e) {
+              console.log(e.corpus);
+            }
           });
         });
       };
