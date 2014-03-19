@@ -43,6 +43,16 @@ var extractQuestions = function(corpus) {
   return questions;
 };
 
+var extractSelfReferences = function(corpus) {
+  var selfReferences = corpus.match(/[^\.;\?]*( I | i )[^\.;!\?]*/g);
+  
+  for (var i = 0; i < selfReferences.length; i++) {
+    selfReferences[i] = selfReferences[i].trim();
+  };
+
+  return selfReferences;
+};
+
 exports.pos = function(req, res){
   var pos = require('pos');
   var input = req.params.text;
@@ -61,14 +71,28 @@ exports.pos = function(req, res){
 
 exports.loadLJ = function(req, res) {
   getLJCorpus(req.params.username, function(data) {
+    data.questions = extractQuestions(data.corpus);
+    data.selfReferences = extractSelfReferences(data.corpus);
+
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(data));
   });
 };
 
+//sentences ending with a question mark
 exports.loadLJQuestions = function(req, res) {
   getLJCorpus(req.params.username, function(data) {
     data.questions = extractQuestions(data.corpus);
+
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify(data));
+  });
+};
+
+//sentences containing the word I
+exports.loadLJSelfReferences = function(req, res) {
+  getLJCorpus(req.params.username, function(data) {
+    data.selfReferences = extractSelfReferences(data.corpus);
 
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(data));
