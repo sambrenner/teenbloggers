@@ -1,3 +1,7 @@
+var dbUrl = 'localhost:27017';
+var collections = ['livejournals'];
+var db = require('mongojs').connect(dbUrl, collections);
+
 var getLJCorpus = function(username, callback) {
   var request = require('request');
   var stripper = require('htmlstrip-native');
@@ -76,15 +80,36 @@ exports.pos = function(req, res){
 };
 
 exports.loadLJ = function(req, res) {
-  getLJCorpus(req.params.username, function(data) {
-    data.questions = extractQuestions(data.corpus);
-    data.selfReferences = extractSelfReferences(data.corpus);
-    data.sentences = extractSentences(data.corpus);
+  var username = req.params.username;
 
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(data));
+  db.livejournals.find({username: username}, function(err, livejournal) {
+    if(err||livejournal.length == 0) {
+      console.log('livejournal not found. getting and saving')
+
+      getLJCorpus(req.params.username, function(data) {
+        data.questions = extractQuestions(data.corpus);
+        data.selfReferences = extractSelfReferences(data.corpus);
+        data.sentences = extractSentences(data.corpus);
+
+        db.livejournals.save(data, function(err, saved) {
+          data.status = 'saved';
+          res.writeHead(200, {'Content-Type': 'application/json'});
+          res.end(JSON.stringify(data));
+        });
+      });
+    } else {
+      livejournal = livejournal[0]
+
+      livejournal.status = 'found';
+      console.log('found in db: ' + livejournal);
+
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.end(JSON.stringify(livejournal));
+    }
   });
 };
+
+exports.searchLJ
 
 //sentences ending with a question mark
 exports.loadLJQuestions = function(req, res) {

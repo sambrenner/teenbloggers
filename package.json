@@ -11,6 +11,7 @@
     "pos": "*",
     "request": "*",
     "xml2js": "*",
-    "htmlstrip-native": "*"
+    "htmlstrip-native": "*",
+    "mongojs": "*"
   }
 }
