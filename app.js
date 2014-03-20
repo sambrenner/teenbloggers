@@ -31,6 +31,7 @@ app.get('/pos/:text', routes.pos);
 app.get('/lj/:username', routes.loadLJ);
 app.get('/lj/:username/questions', routes.loadLJQuestions);
 app.get('/lj/:username/selfReferences', routes.loadLJSelfReferences);
+app.get('/lj/:username/sentences', routes.loadLJSentences);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

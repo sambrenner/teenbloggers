@@ -37,20 +37,26 @@ var extractQuestions = function(corpus) {
   var questions = corpus.match(/[^.!?"]+\?/g);
 
   for (var i = 0; i < questions.length; i++) {
-    questions[i] = questions[i].trim();
+    questions[i] = questions[i].trim() + '?';
   };
 
   return questions;
 };
 
 var extractSelfReferences = function(corpus) {
-  var selfReferences = corpus.match(/[^\.;\?]*( I | i )[^\.;!\?]*/g);
+  var sentences = extractSentences(corpus);
+  var selfReferences = [];
   
-  for (var i = 0; i < selfReferences.length; i++) {
-    selfReferences[i] = selfReferences[i].trim();
+  for (var i = 0; i < sentences.length; i++) {
+    var sentence = sentences[i];
+    if(sentence.match(/\b[Ii]\b/)) selfReferences.push(sentence)
   };
 
   return selfReferences;
+};
+
+var extractSentences = function(corpus) {
+  return corpus.match(/[^.!?\s][^.!?]*(?:[.!?](?!['"]?\s|$)[^.!?]*)*[.!?]?['"]?(?=\s|$)/g);
 };
 
 exports.pos = function(req, res){
@@ -73,6 +79,7 @@ exports.loadLJ = function(req, res) {
   getLJCorpus(req.params.username, function(data) {
     data.questions = extractQuestions(data.corpus);
     data.selfReferences = extractSelfReferences(data.corpus);
+    data.sentences = extractSentences(data.corpus);
 
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(data));
@@ -89,10 +96,20 @@ exports.loadLJQuestions = function(req, res) {
   });
 };
 
-//sentences containing the word I
+//sentences containing the word I (or I'll, I'm etc)
 exports.loadLJSelfReferences = function(req, res) {
   getLJCorpus(req.params.username, function(data) {
     data.selfReferences = extractSelfReferences(data.corpus);
+
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify(data));
+  });
+};
+
+//all sentences
+exports.loadLJSentences = function(req, res) {
+  getLJCorpus(req.params.username, function(data) {
+    data.sentences = extractSentences(data.corpus);
 
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(data));
