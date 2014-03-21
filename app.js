@@ -28,6 +28,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/pos/:text', routes.pos);
+app.get('/lj/search/:term', routes.searchLJ);
 app.get('/lj/:username', routes.loadLJ);
 // app.get('/lj/:username/questions', routes.loadLJQuestions);
 // app.get('/lj/:username/selfReferences', routes.loadLJSelfReferences);
