@@ -50,7 +50,7 @@ var _extractQuestions = function(corpus) {
 };
 
 var _extractSelfReferences = function(corpus) {
-  var sentences = extractSentences(corpus);
+  var sentences = _extractSentences(corpus);
   var selfReferences = [];
   
   for (var i = 0; i < sentences.length; i++) {
@@ -77,13 +77,13 @@ var _getJournal = function(username, select, success) {
       'update': {'$set': {'available': !select}},
       'new': true
     }, function(err, livejournal) {
-    if(err||livejournal.length == 0) {
+    if(err||!livejournal) {
       console.log('livejournal not found. getting and saving')
 
-      _loadJournalCorpus(req.params.username, function(livejournal) {
-        livejournal.questions = _extractQuestions(data.corpus);
-        livejournal.selfReferences = _extractSelfReferences(data.corpus);
-        livejournal.sentences = _extractSentences(data.corpus);
+      _loadJournalCorpus(username, function(livejournal) {
+        livejournal.questions = _extractQuestions(livejournal.corpus);
+        livejournal.selfReferences = _extractSelfReferences(livejournal.corpus);
+        livejournal.sentences = _extractSentences(livejournal.corpus);
         livejournal.available = !select;
 
         db.livejournals.save(livejournal, function(err, saved) {
