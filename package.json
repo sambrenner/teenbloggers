@@ -12,6 +12,7 @@
     "request": "*",
     "xml2js": "*",
     "htmlstrip-native": "*",
-    "mongojs": "*"
+    "mongojs": "*",
+    "socket.io": "*"
   }
 }
