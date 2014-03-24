@@ -40,6 +40,8 @@ var getLJCorpus = function(username, callback) {
 var extractQuestions = function(corpus) {
   var questions = corpus.match(/[^.!?"]+\?/g);
 
+  if(!questions) return [];
+
   for (var i = 0; i < questions.length; i++) {
     questions[i] = { text: questions[i].trim() + '?'};
   };
@@ -119,20 +121,24 @@ exports.searchLJ = function(req, res) {
   var searchRegex = new RegExp('\\b' + req.params.term + '\\b', 'i');
 
   db.livejournals.find({ 'sentences': { '$elemMatch': { text: searchRegex } } }, { 'username': 1, 'sentences.text': 1 }, function(err, data) {
-    //randomly select user
-    var speaker = data[Math.floor(Math.random() * data.length)];
-    
-    //find matching sentences
-    var matchingSentences = [];
-    for (var i = 0; i < speaker.sentences.length; i++) {
-      if(speaker.sentences[i].text.match(searchRegex)) matchingSentences.push(speaker.sentences[i]);
+    if(data.length > 0) {
+      //randomly select user
+      var speaker = data[Math.floor(Math.random() * data.length)];
+      
+      //find matching sentences
+      var matchingSentences = [];
+      for (var i = 0; i < speaker.sentences.length; i++) {
+        if(speaker.sentences[i].text.match(searchRegex)) matchingSentences.push(speaker.sentences[i]);
+      }
+
+      //randomly pick one of those
+      var sentence = matchingSentences[Math.floor(Math.random() * matchingSentences.length)];
+
+      //return it
+      res.send({ username: speaker.username, sentence: sentence });
+    } else {
+      res.send({ error: 1 });
     }
-
-    //randomly pick one of those
-    var sentence = matchingSentences[Math.floor(Math.random() * matchingSentences.length)];
-
-    //return it
-    res.send({ username: speaker.username, sentence: sentence });
   });
 };
 
