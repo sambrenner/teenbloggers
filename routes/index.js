@@ -2,7 +2,7 @@ var dbUrl = 'localhost:27017';
 var collections = ['livejournals'];
 var db = require('mongojs').connect(dbUrl, collections);
 
-var getLJCorpus = function(username, callback) {
+var _loadJournalCorpus = function(username, callback) {
   var request = require('request');
   var stripper = require('htmlstrip-native');
   var xml2js = require('xml2js');
@@ -27,17 +27,17 @@ var getLJCorpus = function(username, callback) {
           corpus += (processedText + ' ');
         }
 
-        var ljInfo = {};
-        ljInfo.username = username;
-        ljInfo.corpus = corpus;
+        var JournalsInfo = {};
+        JournalsInfo.username = username;
+        JournalsInfo.corpus = corpus;
 
-        callback(ljInfo);
+        callback(JournalsInfo);
       });
     }
   });
 };
 
-var extractQuestions = function(corpus) {
+var _extractQuestions = function(corpus) {
   var questions = corpus.match(/[^.!?"]+\?/g);
 
   if(!questions) return [];
@@ -49,7 +49,7 @@ var extractQuestions = function(corpus) {
   return questions;
 };
 
-var extractSelfReferences = function(corpus) {
+var _extractSelfReferences = function(corpus) {
   var sentences = extractSentences(corpus);
   var selfReferences = [];
   
@@ -61,7 +61,7 @@ var extractSelfReferences = function(corpus) {
   return selfReferences;
 };
 
-var extractSentences = function(corpus) {
+var _extractSentences = function(corpus) {
   var sentences = corpus.match(/[^.!?\s][^.!?]*(?:[.!?](?!['"]?\s|$)[^.!?]*)*[.!?]?['"]?(?=\s|$)/g);
 
   for(var i=0; i<sentences.length; i++) {
@@ -69,6 +69,33 @@ var extractSentences = function(corpus) {
   }
 
   return sentences;
+};
+
+var _getJournal = function(username, select, success) {
+  db.livejournals.findAndModify({
+      'query': {'username': username },
+      'update': {'$set': {'available': !select}},
+      'new': true
+    }, function(err, livejournal) {
+    if(err||livejournal.length == 0) {
+      console.log('livejournal not found. getting and saving')
+
+      _loadJournalCorpus(req.params.username, function(livejournal) {
+        livejournal.questions = _extractQuestions(data.corpus);
+        livejournal.selfReferences = _extractSelfReferences(data.corpus);
+        livejournal.sentences = _extractSentences(data.corpus);
+        livejournal.available = !select;
+
+        db.livejournals.save(livejournal, function(err, saved) {
+          livejournal.status = 'saved';
+          success(livejournal);
+        });
+      });
+    } else {
+      livejournal.status = 'found';
+      success(livejournal);
+    }
+  });
 };
 
 exports.pos = function(req, res){
@@ -87,37 +114,14 @@ exports.pos = function(req, res){
   res.end(JSON.stringify(data));
 };
 
-exports.loadLJ = function(req, res) {
-  var username = req.params.username;
-
-  db.livejournals.find({username: username}, function(err, livejournal) {
-    if(err||livejournal.length == 0) {
-      console.log('livejournal not found. getting and saving')
-
-      getLJCorpus(req.params.username, function(data) {
-        data.questions = extractQuestions(data.corpus);
-        data.selfReferences = extractSelfReferences(data.corpus);
-        data.sentences = extractSentences(data.corpus);
-
-        db.livejournals.save(data, function(err, saved) {
-          data.status = 'saved';
-          res.writeHead(200, {'Content-Type': 'application/json'});
-          res.end(JSON.stringify(data));
-        });
-      });
-    } else {
-      livejournal = livejournal[0]
-
-      livejournal.status = 'found';
-      console.log('found in db: ' + livejournal);
-
-      res.writeHead(200, {'Content-Type': 'application/json'});
-      res.end(JSON.stringify(livejournal));
-    }
+exports.getJournal = function(req, res) {
+  _getJournal(req.params.username, false, function(data) {
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify(data));
   });
 };
 
-exports.searchLJ = function(req, res) {
+exports.searchJournals = function(req, res) {
   var searchRegex = new RegExp('\\b' + req.params.term + '\\b', 'i');
 
   db.livejournals.find({ 'sentences': { '$elemMatch': { text: searchRegex } } }, { 'username': 1, 'sentences.text': 1 }, function(err, data) {
@@ -142,32 +146,32 @@ exports.searchLJ = function(req, res) {
   });
 };
 
-//sentences ending with a question mark
-exports.loadLJQuestions = function(req, res) {
-  getLJCorpus(req.params.username, function(data) {
-    data.questions = extractQuestions(data.corpus);
-
+exports.selectJournal = function(req, res) {
+  _getJournal(req.params.username, true, function(data) {
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(data));
   });
 };
 
-//sentences containing the word I (or I'll, I'm etc)
-exports.loadLJSelfReferences = function(req, res) {
-  getLJCorpus(req.params.username, function(data) {
-    data.selfReferences = extractSelfReferences(data.corpus);
-
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(data));
+exports.deselectJournal = function(req, res) {
+  db.livejournals.update({
+    'username': req.params.username
+  }, {
+    '$set': { 'available': true }
+  }, function() {
+    res.send('{"success":true}');
   });
 };
 
-//all sentences
-exports.loadLJSentences = function(req, res) {
-  getLJCorpus(req.params.username, function(data) {
-    data.sentences = extractSentences(data.corpus);
-
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(data));
+exports.getAvailableJournals = function(req, res) {
+  db.livejournals.find({
+    '$or': [
+      { 'available': true },
+      { 'available': null }
+    ]
+  }, {
+    'username': 1
+  }, function(err, data) {
+    res.send(data);
   });
 };

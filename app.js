@@ -28,11 +28,12 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/pos/:text', routes.pos);
-app.get('/lj/search/:term', routes.searchLJ);
-app.get('/lj/:username', routes.loadLJ);
-// app.get('/lj/:username/questions', routes.loadLJQuestions);
-// app.get('/lj/:username/selfReferences', routes.loadLJSelfReferences);
-// app.get('/lj/:username/sentences', routes.loadLJSentences);
+app.get('/lj/search/:term', routes.searchJournals);
+app.get('/lj/available', routes.getAvailableJournals);
+
+app.get('/lj/:username', routes.getJournal);
+app.get('/lj/:username/select', routes.selectJournal);
+app.get('/lj/:username/deselect', routes.deselectJournal);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      body, a { color: #666; }
+
+      .input { color: #CCC; }
+      .response { color: #666; }
+      .speaker { font-weight: bold; margin-right: 4px; }
+
+      #lj_user_form { border-bottom: 1px solid #666; margin-bottom: 10px; padding-bottom: 10px; }
+
+      #chat_window { border: 1px solid #666; height: 300px; overflow: scroll; }
+
+      .hidden { display: none; }
+      .error { color: #E00; font-weight: bold; }
+    </style>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="javascripts/rita.min.js"></script>
+    <script src="javascripts/chatroom/chatroom.main.js"></script>
+    <script src="javascripts/chatroom/chatroom.chatwindow.js"></script>
+    <script src="javascripts/chatroom/chatroom.userselect.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        chatroom.main.init();
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>the catacombs of adolescence</h1>
+    <section id="user_select">
+      <form id="user_select_form">
+        <select id="available_journals">
+          <option value="">select a livejournal</option>
+        </select>
+        
+        - or -
+
+        <input id="new_journal" type="text" placeholder="add a new livejournal user" />
+
+        <input id="user_submit" type="submit" value="select" />
+      </form>
+
+      <p id="user_select_error" class="hidden error">please select or enter a username</p>
+    </section>
+
+    <section id="chat" class="hidden">
+      <form id="chat_form">
+        <input id="chat_input" type="text" placeholder="say something" />
+        <input id="chat_submit" type="submit" value="say it!" />
+      </form>
+
+      <ul id="chat_window">
+      </ul>
+    </section>
+
+    <h2><a href="index.html">see all bots</a></h2>
+  </body>
+</html>
