@@ -17,16 +17,13 @@
     </style>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="javascripts/rita.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
     <script src="javascripts/chatroom/chatroom.main.js"></script>
     <script src="javascripts/chatroom/chatroom.chatwindow.js"></script>
     <script src="javascripts/chatroom/chatroom.userselect.js"></script>
-
-    <script>
-      $(document).ready(function() {
-        chatroom.main.init();
-      });
-    </script>
+    <script src="javascripts/chatroom/chatroom.ljdata.js"></script>
+    <script src="javascripts/chatroom/chatroom.sockets.js"></script>
   </head>
 
   <body>
@@ -58,5 +55,11 @@
     </section>
 
     <h2><a href="index.html">see all bots</a></h2>
+
+    <script>
+      $(document).ready(function() {
+        chatroom.main.init();
+      });
+    </script>
   </body>
 </html>

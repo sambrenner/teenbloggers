@@ -5,6 +5,7 @@ chatroom.main = (function (window, document) {
     init: function() {
       chatroom.chatwindow.init();
       chatroom.userselect.init();
+      chatroom.sockets.init();
     }
   }; 
 
