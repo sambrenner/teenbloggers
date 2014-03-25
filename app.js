@@ -7,6 +7,7 @@ var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
+var io = require('socket.io');
 
 var app = express();
 
@@ -35,6 +36,16 @@ app.get('/lj/:username', routes.getJournal);
 app.get('/lj/:username/select', routes.selectJournal);
 app.get('/lj/:username/deselect', routes.deselectJournal);
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app);
+io = io.listen(server);
+
+server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+io.sockets.on('connection', function(socket) {
+  
+  socket.on('disconnect', function() {
+
+  });
 });
