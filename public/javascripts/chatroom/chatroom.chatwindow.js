@@ -12,7 +12,7 @@ chatroom.chatwindow = (function (window, document) {
       _cacheSelectors();
     },
 
-    addStringToChatWindow: function(className, speaker, string) {
+    addMessage: function(className, speaker, string) {
       $chatWindow.append($('<li class="' + className + '"></li>').append('<span class="speaker">' + speaker + ':</span>' + string));
       $chatWindow.scrollTop(100000);
     }
