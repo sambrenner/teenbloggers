@@ -11,6 +11,7 @@
       #lj_user_form { border-bottom: 1px solid #666; margin-bottom: 10px; padding-bottom: 10px; }
 
       #chat_window { border: 1px solid #666; height: 300px; overflow: scroll; }
+      #available_sentences { width: 70%; }
 
       .hidden { display: none; }
       .error { color: #E00; font-weight: bold; }
@@ -46,7 +47,8 @@
 
     <section id="chat" class="hidden">
       <form id="chat_form">
-        <input id="chat_input" type="text" placeholder="say something" />
+        <select id="available_sentences">
+        </select>
         <input id="chat_submit" type="submit" value="say it!" />
       </form>
 
@@ -54,7 +56,6 @@
       </ul>
     </section>
 
-    <h2><a href="index.html">see all bots</a></h2>
 
     <script>
       $(document).ready(function() {

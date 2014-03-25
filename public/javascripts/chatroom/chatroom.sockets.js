@@ -8,7 +8,7 @@ chatroom.sockets = (function (window, document) {
       _socket = io.connect('/');
 
       _socket.on('message', function(data) {
-        chatroom.chatwindow.addMessage('response', data.username, data.message)
+        chatroom.chatwindow.addMessage('response', data.username, data.message);
       });
     },
 

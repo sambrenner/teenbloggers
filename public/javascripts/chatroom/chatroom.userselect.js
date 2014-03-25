@@ -28,6 +28,9 @@ chatroom.userselect = (function (window, document) {
       success: function(data) {
         chatroom.sockets.selectUser(username);
         chatroom.ljdata.data = data;
+        chatroom.chatwindow.show();
+        chatroom.chatwindow.initSentenceAvailability();
+        self.hide();
       }
     })
   };
@@ -56,6 +59,10 @@ chatroom.userselect = (function (window, document) {
       _cacheSelectors();
       _populateAvailableUsers();
       _bindFormSubmit();
+    },
+
+    hide: function() {
+      _$userSelect.addClass('hidden');
     }
   }; 
 

@@ -30,6 +30,7 @@ if ('development' == app.get('env')) {
 
 app.get('/pos/:text', routes.pos);
 app.get('/lj/search/:term', routes.searchJournals);
+app.get('/lj/available/reset', routes.resetAvailableJournals);
 app.get('/lj/available', routes.getAvailableJournals);
 
 app.get('/lj/:username', routes.getJournal);
@@ -45,7 +46,7 @@ server.listen(app.get('port'), function(){
 
 io.sockets.on('connection', function(socket) {
   socket.on('message', function(message) {
-    socket.broadcast.emit({username: socket.ljusername, message: message.text});
+    socket.broadcast.emit('message', {username: socket.ljusername, message: message.text});
   });
   socket.on('userselect', function(username) {
     console.log('registered user ' + username);

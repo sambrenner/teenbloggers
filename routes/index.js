@@ -181,3 +181,16 @@ exports.getAvailableJournals = function(req, res) {
     res.send(data);
   });
 };
+
+exports.resetAvailableJournals = function(req, res) {
+  db.livejournals.update({
+    '$or': [
+      { 'available': false },
+      { 'available': null }
+    ]
+  }, {
+    '$set': { 'available': true }
+  }, function() {
+    res.send('{"success":true}');
+  });
+};
