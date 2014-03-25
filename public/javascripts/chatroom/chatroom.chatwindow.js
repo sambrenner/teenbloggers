@@ -23,8 +23,12 @@ chatroom.chatwindow = (function (window, document) {
     });
   };
 
-  var _addRandomSentence = function() {
-    _$availableSentences.append('<option>' + chatroom.ljdata.getRandomSentence() + '</option>');
+  var _addRandomSentence = function(num) {
+    if(!num) num = 1;
+
+    for(var i=0; i<num; i++) {
+      _$availableSentences.append('<option>' + chatroom.ljdata.getRandomSentence() + '</option>');
+    }
   };
   
   var self = {
@@ -44,7 +48,7 @@ chatroom.chatwindow = (function (window, document) {
 
     initSentenceAvailability: function() {
       _sentenceInterval = setInterval(_addRandomSentence, 30000);
-      _addRandomSentence();
+      _addRandomSentence(6);
     }
   }; 
 
