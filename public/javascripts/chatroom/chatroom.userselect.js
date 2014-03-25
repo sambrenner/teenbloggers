@@ -1,6 +1,6 @@
 var chatroom = chatroom || {};
 
-chatroom.main = (function (window, document) {
+chatroom.userselect = (function (window, document) {
   var _$userSelect, _$userSelectForm, _$availableJournals, _$newJournal, _$enterUsername;
 
   var _cacheSelectors = function() {
@@ -26,7 +26,7 @@ chatroom.main = (function (window, document) {
     $.ajax({
       url: '/lj/' + username + '/select',
       success: function(data) {
-
+        chatroom.ljdata.data = data;
       }
     })
   };
