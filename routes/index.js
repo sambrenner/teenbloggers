@@ -1,4 +1,4 @@
-var dbUrl = 'localhost:27017';
+var dbUrl = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'localhost:27017';
 var collections = ['livejournals'];
 var db = require('mongojs').connect(dbUrl, collections);
 
