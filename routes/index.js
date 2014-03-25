@@ -153,13 +153,19 @@ exports.selectJournal = function(req, res) {
   });
 };
 
-exports.deselectJournal = function(req, res) {
+exports.deselectJournal = function(username, callback) {
   db.livejournals.update({
-    'username': req.params.username
+    'username': username
   }, {
     '$set': { 'available': true }
   }, function() {
-    res.send('{"success":true}');
+    if(callback) callback('{"success":true}');
+  });
+};
+
+exports.deselectJournalWeb = function(req, res) {
+  deselectJournal(req.params.username, function(data) {
+    res.send(data);
   });
 };
 

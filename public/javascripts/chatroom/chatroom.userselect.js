@@ -26,6 +26,7 @@ chatroom.userselect = (function (window, document) {
     $.ajax({
       url: '/lj/' + username + '/select',
       success: function(data) {
+        chatroom.sockets.selectUser(username);
         chatroom.ljdata.data = data;
       }
     })
