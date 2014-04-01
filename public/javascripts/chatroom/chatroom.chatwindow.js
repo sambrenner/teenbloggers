@@ -15,11 +15,12 @@ chatroom.chatwindow = (function (window, document) {
     _$chatForm.on('submit', function(e) {
       e.preventDefault();
       var message = _$availableSentences.val();
+      if(message) {
+        _$availableSentences.find(':selected').remove();
 
-      _$availableSentences.find(':selected').remove();
-
-      self.addMessage('input', chatroom.ljdata.data.username, message);
-      chatroom.sockets.sendMessage(message);
+        self.addMessage('input', chatroom.ljdata.data.username, message);
+        chatroom.sockets.sendMessage(message);
+      }
     });
   };
 

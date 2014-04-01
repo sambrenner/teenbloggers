@@ -45,6 +45,8 @@ server.listen(app.get('port'), function(){
 });
 
 io.sockets.on('connection', function(socket) {
+  console.log(socket);
+
   socket.on('message', function(message) {
     socket.broadcast.emit('message', {username: socket.ljusername, message: message.text});
   });
