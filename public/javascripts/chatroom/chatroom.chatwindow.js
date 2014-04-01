@@ -54,7 +54,7 @@ chatroom.chatwindow = (function (window, document) {
     },
 
     addUser: function(user) {
-      _$onlineUsers.append('<li id="user_' + user + '">' + user + '</li>');
+      _$onlineUsers.append('<li id="user_' + user + '"><a href="http://' + user + '.livejournal.com" target="_blank">' + user + '</a></li>');
     },
 
     removeUser: function(user) {
