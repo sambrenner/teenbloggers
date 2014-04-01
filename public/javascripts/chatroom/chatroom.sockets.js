@@ -10,6 +10,22 @@ chatroom.sockets = (function (window, document) {
       _socket.on('message', function(data) {
         chatroom.chatwindow.addMessage('response', data.username, data.message);
       });
+
+      _socket.on('allusers', function(data) {
+        data = data.clients;
+        
+        for (var i = 0; i < data.length; i++) {
+          chatroom.chatwindow.addUser(data[i]);
+        };
+      });
+
+      _socket.on('newuser', function(data) {
+        chatroom.chatwindow.addUser(data)
+      });
+
+      _socket.on('userdisconnect', function(data) {
+        chatroom.chatwindow.removeUser(data);
+      });
     },
 
     sendMessage: function(message) {

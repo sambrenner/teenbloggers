@@ -45,19 +45,42 @@ server.listen(app.get('port'), function(){
 });
 
 io.sockets.on('connection', function(socket) {
-  console.log(socket);
-
   socket.on('message', function(message) {
-    socket.broadcast.emit('message', {username: socket.ljusername, message: message.text});
+    socket.get('ljusername', function(err, username) { 
+      socket.broadcast.emit('message', {username: username, message: message.text});
+    });
   });
   socket.on('userselect', function(username) {
     console.log('registered user ' + username);
-    socket.ljusername = username;
+    socket.broadcast.emit('newuser', username);
+
+    socket.set('ljusername', username, function() {
+      getActiveClients(function(activeClients) {
+        socket.emit('allusers', {clients: activeClients});
+      });
+    });
   });
   socket.on('disconnect', function() {
-    if(socket.ljusername) {
-      console.log('unregistered user ' + socket.ljusername);
-      routes.deselectJournal(socket.ljusername);
-    }
+    socket.get('ljusername', function(err, username) { 
+      console.log('unregistered user ' + username);
+      socket.broadcast.emit('userdisconnect', username);
+      routes.deselectJournal(username);
+    });
   });
 });
+
+function getActiveClients(callback) {
+  var clients = io.sockets.clients();
+  var activeClients = [];
+  var completedClients = 0;
+
+  for (var i = 0; i < clients.length; i++) {
+    var client = clients[i];
+    client.get('ljusername', function(err, username) {
+      activeClients.push(username);
+
+      completedClients++;
+      if(completedClients == clients.length) callback(activeClients);
+    });
+  };
+}

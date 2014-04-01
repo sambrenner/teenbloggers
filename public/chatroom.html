@@ -10,7 +10,12 @@
 
       #lj_user_form { border-bottom: 1px solid #666; margin-bottom: 10px; padding-bottom: 10px; }
 
-      #chat_window { border: 1px solid #666; height: 300px; overflow: scroll; }
+      #chat_window { border: 1px solid #666; float: left; height: 300px; overflow: scroll; padding: 0; width: 60%; }
+      #chat_window li { list-style-type: none; }
+
+      #online_users { float: right; padding: 0; width: 35%; }
+      #online_users li { list-style-type: none; }
+
       #available_sentences { width: 70%; }
 
       .hidden { display: none; }
@@ -53,6 +58,10 @@
       </form>
 
       <ul id="chat_window">
+      </ul>
+
+      <ul id="online_users">
+        <li><h2>Online Users</h2></li>
       </ul>
     </section>
 

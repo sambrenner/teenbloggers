@@ -1,7 +1,7 @@
 var chatroom = chatroom || {};
 
 chatroom.chatwindow = (function (window, document) {
-  var _$chatSection, _$chatWindow, _$availableSentences, _$chatForm;
+  var _$chatSection, _$chatWindow, _$availableSentences, _$chatForm, _$onlineUsers;
   var _sentenceInterval;
 
   var _cacheSelectors = function() {
@@ -9,6 +9,7 @@ chatroom.chatwindow = (function (window, document) {
     _$chatSection = $('#chat');
     _$chatForm = $('#chat_form');
     _$availableSentences = $('#available_sentences');
+    _$onlineUsers = $('#online_users');
   };
 
   var _bindFormInteraction = function() {
@@ -31,7 +32,7 @@ chatroom.chatwindow = (function (window, document) {
       _$availableSentences.append('<option>' + chatroom.ljdata.getRandomSentence() + '</option>');
     }
   };
-  
+
   var self = {
     init: function() {
       _cacheSelectors();
@@ -50,6 +51,14 @@ chatroom.chatwindow = (function (window, document) {
     initSentenceAvailability: function() {
       _sentenceInterval = setInterval(_addRandomSentence, 30000);
       _addRandomSentence(6);
+    },
+
+    addUser: function(user) {
+      _$onlineUsers.append('<li id="user_' + user + '">' + user + '</li>');
+    },
+
+    removeUser: function(user) {
+      $('#user_' + user).remove();
     }
   }; 
 
