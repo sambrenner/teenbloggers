@@ -59,6 +59,8 @@ chatroom.userselect = (function (window, document) {
       _cacheSelectors();
       _populateAvailableUsers();
       _bindFormSubmit();
+
+      $('#lj_link').attr('href', 'http://www.livejournal.com/ratings/users/?page=' + (Math.floor(Math.random() * 10000) + 2000));
     },
 
     hide: function() {
