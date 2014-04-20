@@ -35,11 +35,18 @@ Scummesque.Level.prototype.addEvents = function() {
 
   $window.on('interactable_click', function(e) {
     if(level.actor) {
-      level.actor.walkToAndTurn({x: e.mouseEvent.stageX}, 60, function() {
-        console.log("i'm looking at the thing");
+      var objCoords = e.mouseEvent.currentTarget.localToGlobal(e.mouseEvent.localX, e.mouseEvent.localY);
+      objCoords = level.background.globalToLocal(objCoords.x, objCoords.y);
+      level.actor.walkToAndTurn({x: objCoords.x}, 60, function() {
+        level.checkContainerSlide(level.actor.container.x);
       });
     }
   });
+};
+
+Scummesque.Level.prototype.checkContainerSlide = function(actorX) {
+  if(actorX > 580) this.shiftTo(-296);
+  else if(actorX < 360) this.shiftTo(0);
 }
 
 Scummesque.Level.prototype.shiftTo = function(x, onComplete) {

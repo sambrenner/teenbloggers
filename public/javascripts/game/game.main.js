@@ -86,8 +86,7 @@ game.main = (function(window, document) {
           var container = level.background ? level.background : level.container;
           container.addEventListener('click', function(e) {
             actor.walkTo({x: e.localX}, 60, function() {
-              if(e.localX > 580) level.shiftTo(-296);
-              else if(e.localX < 360) level.shiftTo(0);
+              level.checkContainerSlide(e.localX);
             });
           });
         }
