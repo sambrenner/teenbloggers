@@ -14,6 +14,7 @@ Scummesque.Level.prototype.init = function() {
   if(this.interactables) {
     for(var i=0; i<this.interactables.length; i++) {
       var interactable = this.interactables[i];
+      interactable.init();
 
       this.container.addChild(interactable.container);
     }
@@ -25,3 +26,9 @@ Scummesque.Level.prototype.init = function() {
 
   if(this.enter) this.enter();
 };
+
+Scummesque.Level.prototype.shiftTo = function(x, onComplete) {
+  createjs.Tween.get(this.container).to({x: x}, 1000, createjs.Ease.quadInOut).call(function() {
+    if(onComplete) onComplete();
+  });
+}

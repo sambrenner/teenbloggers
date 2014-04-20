@@ -10,9 +10,29 @@ Scummesque.Game = function(options) {
   if(!this.levels) console.error('Game requires Levels');
 
   this.stage = new createjs.Stage(this.canvasId);
+  this.stage.enableMouseOver(4);
+
+  this.addEvents();
 
   if(this.autoStart) this.start();
 };
+
+Scummesque.Game.prototype.addEvents = function() {
+  var game = this;
+  var $window = $(window);
+
+  $window.on('show_console', function() {
+    game.console.show();
+  });
+
+  $window.on('display_console_text', function(e) {
+    game.console.displayText(e.text);
+  });
+
+  $window.on('hide_console_text', function(e) {
+    game.console.displayText('');
+  });
+}
 
 Scummesque.Game.prototype.currentLevel = null;
 Scummesque.Game.prototype.nextLevel = null;

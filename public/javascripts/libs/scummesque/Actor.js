@@ -22,7 +22,7 @@ Scummesque.Actor = function(options) {
    this.container.addChild(this.sprite);
 };
 
-Scummesque.Actor.prototype.walkTo = function(position, speed) {
+Scummesque.Actor.prototype.walkTo = function(position, speed, onArrive) {
   var actor = this;
 
   this.sprite.gotoAndPlay('walk');
@@ -44,5 +44,6 @@ Scummesque.Actor.prototype.walkTo = function(position, speed) {
 
   createjs.Tween.get(this.container).to({x: toX, y: toY}, time).call(function() {
     actor.sprite.gotoAndPlay('stand');
+    if(onArrive) onArrive();
   });
 };

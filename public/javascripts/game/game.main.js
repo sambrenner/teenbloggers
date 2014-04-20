@@ -55,8 +55,26 @@ game.main = (function(window, document) {
           },
           defaultAnimation: 'walk'
         }),
+        interactables: [
+          new Scummesque.Interactable({
+            action: 'Look at',
+            name: 'Trophy Cabinet',
+            imageUrl: '/images/game/trophycabinet.gif',
+            position: {x: 269, y: 116}
+          }),
+          new Scummesque.Interactable({
+            action: 'Open',
+            name: 'Computer Lab Door',
+            imageUrl: '/images/game/labdoor.gif',
+            position: {x: 693, y: 116}
+          })
+        ],
         enter: function() {
+          var level = this;
           var actor = this.actor;
+
+          $(window).trigger('show_console');
+
           actor.container.y = 340;
           actor.container.x = -68;
 
@@ -64,9 +82,12 @@ game.main = (function(window, document) {
             actor.sprite.gotoAndPlay('stand');
           });
 
-          var container = this.container;
+          var container = level.container;
           container.addEventListener('click', function(e) {
-            actor.walkTo({x: e.stageX}, 60);
+            actor.walkTo({x: e.localX}, 60, function() {
+              if(e.localX > 580) level.shiftTo(-296);
+              else if(e.localX < 360) level.shiftTo(0);
+            });
           });
         }
       })
@@ -80,6 +101,9 @@ game.main = (function(window, document) {
       _scummesque = new Scummesque.Game({
         canvasId: 'game_canvas',
         levels: _makeLevels(),
+        console: new Scummesque.Console({
+          domElement: $('#console')
+        }),
         autoStart: true
       });
     }

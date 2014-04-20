@@ -6,6 +6,10 @@ h1 { font-size: 200%; }
 h2 { font-size: 150%; }
 p { font-size: 120%; }
 
-#main_content { background-color: #040404; border: 3px solid #FEFEFE; color: #FEFEFE; height: 480px; position: absolute; width: 640px; }
+#main_content { background-color: #040404; border: 3px solid #FEFEFE; color: #FEFEFE; height: 480px; overflow: hidden; position: absolute; width: 640px; }
 #main_content .modal { background-color: #000; padding: 18px; width: 400px; }
 #main_content > section { position: absolute; }
+
+#console { background-color: #000; bottom: 0; height: 118px; position: absolute; width: 100%; }
+#console { -webkit-transiton: bottom 2s ease; -moz-transition: bottom .5s ease; -o-transition: bottom .5s ease; transition: bottom .5s ease; }
+#console.hidden { display: block; bottom: -118px; }
