@@ -21,3 +21,28 @@ Scummesque.Actor = function(options) {
 
    this.container.addChild(this.sprite);
 };
+
+Scummesque.Actor.prototype.walkTo = function(position, speed) {
+  var actor = this;
+
+  this.sprite.gotoAndPlay('walk');
+     
+  var fromX, toX, fromY, toY;
+  fromX = toX = this.container.x;
+  fromY = toY = this.container.y;
+
+  if(position.x) toX = position.x;
+  if(position.y) toY = position.y;
+
+  if(toX < fromX)
+    this.sprite.setTransform(0,0,-1);
+  else
+    this.sprite.setTransform(0,0,1);
+
+  var distance = Scummesque.Utils.distance(fromX, fromY, toX, toY);
+  var time = Scummesque.Utils.distanceToTime(distance, speed);
+
+  createjs.Tween.get(this.container).to({x: toX, y: toY}, time).call(function() {
+    actor.sprite.gotoAndPlay('stand');
+  });
+};

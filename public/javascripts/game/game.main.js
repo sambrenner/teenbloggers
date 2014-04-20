@@ -49,13 +49,15 @@ game.main = (function(window, document) {
           },
           spriteFrames: {
             width: 68,
-            height: 156
+            height: 156,
+            regX: 34,
+            regY: 156
           },
           defaultAnimation: 'walk'
         }),
         enter: function() {
           var actor = this.actor;
-          actor.container.y = 185;
+          actor.container.y = 340;
           actor.container.x = -68;
 
           createjs.Tween.get(actor.container).to({x: 60}, 2000).call(function() {
@@ -64,10 +66,7 @@ game.main = (function(window, document) {
 
           var container = this.container;
           container.addEventListener('click', function(e) {
-            actor.sprite.gotoAndPlay('walk');
-            createjs.Tween.get(actor.container).to({x: e.stageX}, 2000).call(function() {
-              actor.sprite.gotoAndPlay('stand');
-            });
+            actor.walkTo({x: e.stageX}, 60);
           });
         }
       })
