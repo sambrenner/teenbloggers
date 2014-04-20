@@ -29,7 +29,8 @@ Scummesque.Game.prototype.transitionToLevel = function(level) {
 };
 
 Scummesque.Game.prototype.start = function() {
-  this.animate();
+  createjs.Ticker.addEventListener('tick', this.stage);
+
   this.transitionToLevel(0);
 };
 

@@ -5,6 +5,8 @@ game.main = (function(window, document) {
 
   var _makeLevels = function() {
     return [
+
+      //Intro Screen
       new Scummesque.Level({
         backgroundUrl: '/images/game/establishingshot.gif',
         domElementOverlay: $('#intro'),
@@ -30,19 +32,46 @@ game.main = (function(window, document) {
         },
         exit: function() {
           this.domElementOverlay.addClass('hidden');
-          
+
           _scummesque.transitionToLevel(1);
         }
       }),
+
+      //Hallway
       new Scummesque.Level({
-        backgroundUrl: '/images/game/hallway.gif'
+        backgroundUrl: '/images/game/hallway.gif',
+        actor: new Scummesque.Actor({
+          spritesheetUrl: '/images/game/walkcycle.png',
+          spriteAnimations: {
+            walk: [0,8],
+            turn: [9,10],
+            stand: [11]
+          },
+          spriteFrames: {
+            width: 68,
+            height: 156
+          },
+          defaultAnimation: 'walk'
+        }),
+        enter: function() {
+          var actor = this.actor;
+          actor.container.y = 185;
+          actor.container.x = -68;
+
+          createjs.Tween.get(actor.container).to({x: 60}, 2000).call(function() {
+            actor.sprite.gotoAndPlay('stand');
+          });
+
+          var container = this.container;
+          container.addEventListener('click', function(e) {
+            actor.sprite.gotoAndPlay('walk');
+            createjs.Tween.get(actor.container).to({x: e.stageX}, 2000).call(function() {
+              actor.sprite.gotoAndPlay('stand');
+            });
+          });
+        }
       })
     ];
-  };
-
-  var _animate = function() {
-    window.requestAnimationFrame(_animate);
-    _scummesque.animate();
   };
 
   var self = {
@@ -54,8 +83,6 @@ game.main = (function(window, document) {
         levels: _makeLevels(),
         autoStart: true
       });
-
-      _animate();
     }
   };
 
