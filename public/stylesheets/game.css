@@ -1,0 +1,11 @@
+body { background: url('/images/bg.jpg') 0 0 repeat; font-family: 'VT323'; }
+
+.hidden { display: none; }
+
+h1 { font-size: 200%; }
+h2 { font-size: 150%; }
+p { font-size: 120%; }
+
+#main_content { background-color: #040404; border: 3px solid #FEFEFE; color: #FEFEFE; height: 480px; position: absolute; width: 640px; }
+#main_content .modal { background-color: #000; padding: 18px; width: 400px; }
+#main_content > section { position: absolute; }
