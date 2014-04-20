@@ -5,6 +5,7 @@
 
 var express = require('express');
 var routes = require('./routes');
+var game = require('./routes/game')
 var http = require('http');
 var path = require('path');
 var io = require('socket.io');
@@ -36,6 +37,8 @@ app.get('/lj/available', routes.getAvailableJournals);
 app.get('/lj/:username', routes.getJournal);
 app.get('/lj/:username/select', routes.selectJournal);
 app.get('/lj/:username/deselect', routes.deselectJournalWeb);
+
+app.get('/game', game.index);
 
 var server = http.createServer(app);
 io = io.listen(server);
