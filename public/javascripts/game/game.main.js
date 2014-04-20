@@ -44,8 +44,9 @@ game.main = (function(window, document) {
           spritesheetUrl: '/images/game/walkcycle.png',
           spriteAnimations: {
             walk: [0,8],
-            turn: [9,10],
-            stand: [11]
+            turn: [9,10,'standAway'],
+            standSide: [11],
+            standAway: [10]
           },
           spriteFrames: {
             width: 68,
@@ -79,10 +80,10 @@ game.main = (function(window, document) {
           actor.container.x = -68;
 
           createjs.Tween.get(actor.container).to({x: 60}, 2000).call(function() {
-            actor.sprite.gotoAndPlay('stand');
+            actor.sprite.gotoAndPlay('standSide');
           });
 
-          var container = level.container;
+          var container = level.background ? level.background : level.container;
           container.addEventListener('click', function(e) {
             actor.walkTo({x: e.localX}, 60, function() {
               if(e.localX > 580) level.shiftTo(-296);

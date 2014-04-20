@@ -30,5 +30,12 @@ Scummesque.Interactable.prototype.addEvents = function() {
 
   this.container.addEventListener('mouseout', function() {
     $window.trigger('hide_console_text');
-  })
+  });
+
+  this.container.addEventListener('click', function(e) {
+    $window.trigger({
+      type:'interactable_click',
+      mouseEvent: e
+    });
+  });
 }

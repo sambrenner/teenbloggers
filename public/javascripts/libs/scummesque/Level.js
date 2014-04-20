@@ -8,7 +8,7 @@ Scummesque.Level = function(options) {
 
 Scummesque.Level.prototype.init = function() {
   if(this.backgroundUrl) {
-    this.container.addChild(new createjs.Bitmap(this.backgroundUrl));
+    this.background = this.container.addChild(new createjs.Bitmap(this.backgroundUrl));
   }
 
   if(this.interactables) {
@@ -24,8 +24,23 @@ Scummesque.Level.prototype.init = function() {
     this.container.addChild(this.actor.container);
   }
 
+  this.addEvents();
+
   if(this.enter) this.enter();
 };
+
+Scummesque.Level.prototype.addEvents = function() {
+  var $window = $(window);
+  var level = this;
+
+  $window.on('interactable_click', function(e) {
+    if(level.actor) {
+      level.actor.walkToAndTurn({x: e.mouseEvent.stageX}, 60, function() {
+        console.log("i'm looking at the thing");
+      });
+    }
+  });
+}
 
 Scummesque.Level.prototype.shiftTo = function(x, onComplete) {
   createjs.Tween.get(this.container).to({x: x}, 1000, createjs.Ease.quadInOut).call(function() {
