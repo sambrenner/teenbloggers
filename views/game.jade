@@ -1,0 +1,43 @@
+extends layout
+
+block styles
+  link(href="http://fonts.googleapis.com/css?family=VT323" rel="stylesheet" type="text/css")
+  link(rel="stylesheet", type="text/css", href="stylesheets/game.css")
+
+block scripts
+  script(type="text/javascript", src="/javascripts/libs/jquery-2.1.0.min.js")
+  script(type="text/javascript", src="/javascripts/libs/createjs.min.js")
+
+  script(type="text/javascript", src="/javascripts/libs/scummesque/Game.js")
+  script(type="text/javascript", src="/javascripts/libs/scummesque/Interactable.js")
+  script(type="text/javascript", src="/javascripts/libs/scummesque/Level.js")
+  script(type="text/javascript", src="/javascripts/libs/scummesque/Console.js")
+
+  script(type="text/javascript", src="/javascripts/game/game.main.js")
+  script(type="text/javascript", src="/javascripts/game/game.ui.js")
+
+block content
+  section(id="game")
+    canvas(id="game_canvas" height="480" width="640")
+
+  section(id="intro")
+    section(id="welcome" class="modal")
+      h1 Adventures of Teen Bloggers
+      a(href="#" id="begin") Click to Begin
+
+    section(id="character_select" class="hidden modal")
+      h2 Choose Your Teen
+      p You will become the adolescent. You will bring their most private thoughts to the public internet. Choose wisely.
+      p Any LiveJournal account will work. More are available <a id="lj_link" href="http://www.livejournal.com/ratings/users/?page=2000" target="_blank">here</a>.
+      form
+        select(id="available_journals")
+          option Select a LiveJournal
+
+        input(id="new_journal" type="text", placeholder="or enter any LiveJournal username")
+        input(id="user_submit" type="submit", value="Select")
+
+block footer
+  script(type="text/javascript").
+    $(document).ready(function() {
+      game.main.init();
+    });
