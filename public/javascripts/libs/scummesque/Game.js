@@ -20,8 +20,12 @@ Scummesque.Game.prototype.nextLevel = null;
 Scummesque.Game.prototype.transitionToLevel = function(level) {
   this.nextLevel = this.levels[level];
 
+  if(this.currentLevel) this.stage.removeChild(this.currentLevel.container);
+
   this.nextLevel.init();
   this.stage.addChild(this.nextLevel.container);
+
+  this.currentLevel = this.nextLevel;
 };
 
 Scummesque.Game.prototype.start = function() {

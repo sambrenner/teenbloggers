@@ -12,6 +12,7 @@ game.main = (function(window, document) {
           var $welcomeSection = $('#welcome');
           var $characterSelectSection = $('#character_select');
           var $beginBtn = $('#begin');
+          var level = this;
 
           $welcomeSection.removeClass('hidden');
 
@@ -24,12 +25,17 @@ game.main = (function(window, document) {
 
           $characterSelectSection.find('form').on('submit', function(e) {
             e.preventDefault();
-            this.exit();
+            level.exit();
           });
         },
         exit: function() {
+          this.domElementOverlay.addClass('hidden');
+          
           _scummesque.transitionToLevel(1);
         }
+      }),
+      new Scummesque.Level({
+        backgroundUrl: '/images/game/hallway.gif'
       })
     ];
   };

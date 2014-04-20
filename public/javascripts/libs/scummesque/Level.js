@@ -2,8 +2,7 @@ var Scummesque = Scummesque || {};
 
 Scummesque.Level = function(options) {
   for (var o in options) { this[o] = options[o]; }
-
-  if(!this.exit) console.error('Levels require an exit fuction');
+    
   if(!this.container) this.container = new createjs.Container();
 };
 
