@@ -54,6 +54,6 @@ Scummesque.Actor.prototype.walkToAndTurn = function(position, speed, onArrive) {
   this.walkTo(position, speed, function() {
     actor.sprite.gotoAndPlay('turn');
 
-    if(onArrive) onArrive();
+    if(onArrive) setTimeout(onArrive, 750); // pause for turn animation
   });
 }

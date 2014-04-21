@@ -3,6 +3,25 @@ var game = game || {};
 game.main = (function(window, document) {
   var _scummesque;
 
+  var _makeActor = function() {
+    return new Scummesque.Actor({
+      spritesheetUrl: '/images/game/walkcycle.png',
+      spriteAnimations: {
+        walk: [0,8],
+        turn: [9,10,'standAway'],
+        standSide: [11],
+        standAway: [10]
+      },
+      spriteFrames: {
+        width: 68,
+        height: 156,
+        regX: 34,
+        regY: 156
+      },
+      defaultAnimation: 'walk'
+    });
+  };
+
   var _makeLevels = function() {
     var $window = $(window);
 
@@ -42,22 +61,7 @@ game.main = (function(window, document) {
       //Hallway
       new Scummesque.Level({
         backgroundUrl: '/images/game/hallway.gif',
-        actor: new Scummesque.Actor({
-          spritesheetUrl: '/images/game/walkcycle.png',
-          spriteAnimations: {
-            walk: [0,8],
-            turn: [9,10,'standAway'],
-            standSide: [11],
-            standAway: [10]
-          },
-          spriteFrames: {
-            width: 68,
-            height: 156,
-            regX: 34,
-            regY: 156
-          },
-          defaultAnimation: 'walk'
-        }),
+        actor: _makeActor(),
         interactables: [
           new Scummesque.Interactable({
             action: 'Look at',
@@ -79,6 +83,7 @@ game.main = (function(window, document) {
             position: {x: 693, y: 116},
             onFocus: function() {
               // go to next level
+              _scummesque.transitionToLevel(2);
             }
           }),
           new Scummesque.Interactable({
@@ -109,6 +114,22 @@ game.main = (function(window, document) {
             actor.walkTo({x: e.localX}, 80, function() {
               level.checkContainerSlide(e.localX);
             });
+          });
+        }
+      }),
+      
+      //Computer Lab
+      new Scummesque.Level({
+        backgroundUrl: '/images/game/complab.gif',
+        actor: _makeActor(),
+        enter: function() {
+          var actor = this.actor;
+
+          actor.container.y = 340;
+          actor.container.x = -68;
+
+          createjs.Tween.get(actor.container).to({x: 60}, 2000).call(function() {
+            actor.sprite.gotoAndPlay('standSide');
           });
         }
       })
