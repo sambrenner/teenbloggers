@@ -68,6 +68,12 @@ game.main = (function(window, document) {
             name: 'Computer Lab Door',
             imageUrl: '/images/game/labdoor.gif',
             position: {x: 693, y: 116}
+          }),
+          new Scummesque.Interactable({
+            action: 'Talk to',
+            name: 'Flirting Couple',
+            imageUrl: '/images/game/people.gif',
+            position: {x: 504, y: 141}
           })
         ],
         enter: function() {
@@ -85,7 +91,7 @@ game.main = (function(window, document) {
 
           var container = level.background ? level.background : level.container;
           container.addEventListener('click', function(e) {
-            actor.walkTo({x: e.localX}, 60, function() {
+            actor.walkTo({x: e.localX}, 80, function() {
               level.checkContainerSlide(e.localX);
             });
           });

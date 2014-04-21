@@ -37,7 +37,7 @@ Scummesque.Level.prototype.addEvents = function() {
     if(level.actor) {
       var objCoords = e.mouseEvent.currentTarget.localToGlobal(e.mouseEvent.localX, e.mouseEvent.localY);
       objCoords = level.background.globalToLocal(objCoords.x, objCoords.y);
-      level.actor.walkToAndTurn({x: objCoords.x}, 60, function() {
+      level.actor.walkToAndTurn({x: objCoords.x}, 80, function() {
         level.checkContainerSlide(level.actor.container.x);
       });
     }
