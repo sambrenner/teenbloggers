@@ -97,24 +97,7 @@ game.main = (function(window, document) {
           })
         ],
         enter: function() {
-          var level = this;
-          var actor = this.actor;
-
-          $(window).trigger('show_console');
-
-          actor.container.y = 340;
-          actor.container.x = -68;
-
-          createjs.Tween.get(actor.container).to({x: 60}, 2000).call(function() {
-            actor.sprite.gotoAndPlay('standSide');
-          });
-
-          var container = level.background ? level.background : level.container;
-          container.addEventListener('click', function(e) {
-            actor.walkTo({x: e.localX}, 80, function() {
-              level.checkContainerSlide(e.localX);
-            });
-          });
+          
         }
       }),
       
@@ -123,14 +106,7 @@ game.main = (function(window, document) {
         backgroundUrl: '/images/game/complab.gif',
         actor: _makeActor(),
         enter: function() {
-          var actor = this.actor;
-
-          actor.container.y = 340;
-          actor.container.x = -68;
-
-          createjs.Tween.get(actor.container).to({x: 60}, 2000).call(function() {
-            actor.sprite.gotoAndPlay('standSide');
-          });
+          
         }
       })
     ];

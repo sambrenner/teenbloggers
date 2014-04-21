@@ -7,6 +7,8 @@ Scummesque.Level = function(options) {
 };
 
 Scummesque.Level.prototype.init = function() {
+  this.addEvents();
+
   if(this.backgroundUrl) {
     this.background = this.container.addChild(new createjs.Bitmap(this.backgroundUrl));
   }
@@ -22,12 +24,32 @@ Scummesque.Level.prototype.init = function() {
 
   if(this.actor) {
     this.container.addChild(this.actor.container);
+    this.initActor();
   }
-
-  this.addEvents();
 
   if(this.enter) this.enter();
 };
+
+Scummesque.Level.prototype.initActor = function() {
+  var level = this;
+  var actor = this.actor;
+
+  $(window).trigger('show_console');
+
+  actor.container.y = 340;
+  actor.container.x = -68;
+
+  createjs.Tween.get(actor.container).to({x: 60}, 2000).call(function() {
+    actor.sprite.gotoAndPlay('standSide');
+  });
+
+  var container = level.background ? level.background : level.container;
+  container.addEventListener('click', function(e) {
+    actor.walkTo({x: e.localX}, 80, function() {
+      level.checkContainerSlide(e.localX);
+    });
+  });
+}
 
 Scummesque.Level.prototype.addEvents = function() {
   var $window = $(window);
