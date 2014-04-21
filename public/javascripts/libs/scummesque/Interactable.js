@@ -6,6 +6,7 @@ Scummesque.Interactable = function(options) {
   if(!this.name) console.error('Interactables need names');
   if(!this.action) console.error('Interactables need actions');
   if(!this.imageUrl) console.error('Interactables need images');
+  if(!this.onFocus) console.error('Interactables need focus instructions');
   if(!this.container) this.container = new createjs.Container();
 };
 
@@ -35,7 +36,8 @@ Scummesque.Interactable.prototype.addEvents = function() {
   this.container.addEventListener('click', function(e) {
     $window.trigger({
       type:'interactable_click',
-      mouseEvent: e
+      mouseEvent: e,
+      onFocus: interactable.onFocus
     });
   });
 }

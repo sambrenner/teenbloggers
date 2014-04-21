@@ -26,11 +26,15 @@ Scummesque.Game.prototype.addEvents = function() {
   });
 
   $window.on('display_console_text', function(e) {
-    game.console.displayText(e.text);
+    game.console.displayText(e.text, e.constant);
   });
 
   $window.on('hide_console_text', function(e) {
-    game.console.displayText('');
+    game.console.clearText();
+  });
+
+  $window.on('interactable_click', function() {
+    game.console.clearText(true);
   });
 }
 

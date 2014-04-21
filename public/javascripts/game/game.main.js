@@ -4,6 +4,8 @@ game.main = (function(window, document) {
   var _scummesque;
 
   var _makeLevels = function() {
+    var $window = $(window);
+
     return [
 
       //Intro Screen
@@ -61,19 +63,32 @@ game.main = (function(window, document) {
             action: 'Look at',
             name: 'Trophy Cabinet',
             imageUrl: '/images/game/trophycabinet.gif',
-            position: {x: 269, y: 116}
+            position: {x: 269, y: 116},
+            onFocus: function() {
+              $window.trigger({
+                type: 'display_console_text',
+                text: 'This one trophy has a bunch of LEDs in it. I wonder who made that?',
+                constant: true
+              });
+            }
           }),
           new Scummesque.Interactable({
             action: 'Open',
             name: 'Computer Lab Door',
             imageUrl: '/images/game/labdoor.gif',
-            position: {x: 693, y: 116}
+            position: {x: 693, y: 116},
+            onFocus: function() {
+              // go to next level
+            }
           }),
           new Scummesque.Interactable({
             action: 'Talk to',
             name: 'Flirting Couple',
             imageUrl: '/images/game/people.gif',
-            position: {x: 504, y: 141}
+            position: {x: 504, y: 141},
+            onFocus: function() {
+              // zoom in on couple
+            }
           })
         ],
         enter: function() {
