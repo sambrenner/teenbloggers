@@ -45,6 +45,8 @@ Scummesque.Level.prototype.initActor = function() {
 
   var container = level.background ? level.background : level.container;
   container.addEventListener('click', function(e) {
+    $(window).trigger('level_click');
+    
     actor.walkTo({x: e.localX}, 80, function() {
       level.checkContainerSlide(e.localX);
     });

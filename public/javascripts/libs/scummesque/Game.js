@@ -36,6 +36,10 @@ Scummesque.Game.prototype.addEvents = function() {
   $window.on('interactable_click', function() {
     game.console.clearText(true);
   });
+
+  $window.on('level_click', function() {
+    game.console.clearText(true);
+  });
 }
 
 Scummesque.Game.prototype.currentLevel = null;

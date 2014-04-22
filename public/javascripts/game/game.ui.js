@@ -38,6 +38,8 @@ game.ui = (function(window, document) {
       _cacheSelectors();
       _bindWindowResize();
       _positionModals();
+
+      $('#lj_link').attr('href', 'http://www.livejournal.com/ratings/users/?page=' + (Math.floor(Math.random() * 10000) + 2000));
     }
   };
 
