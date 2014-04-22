@@ -51,6 +51,9 @@ game.main = (function(window, document) {
 
           $characterSelectSection.find('form').on('submit', function(e) {
             e.preventDefault();
+
+            game.userselect.loadUser(game.userselect.getComboboxValue());
+
             level.exit();
           });
         },
@@ -118,6 +121,7 @@ game.main = (function(window, document) {
   var self = {
     init: function() {
       game.ui.init();
+      game.sockets.init();
 
       _scummesque = new Scummesque.Game({
         canvasId: 'game_canvas',

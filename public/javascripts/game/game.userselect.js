@@ -1,7 +1,7 @@
 var game = game || {};
 
 game.userselect = (function(window, document) {
-  var _$availableJournals, _$userSubmit, _$characterSelect;
+  var _$availableJournals, _$userSubmit, _$characterSelect, _$combobox;
 
   var _cacheSelectors = function() {
     _$availableJournals = $('#available_journals');
@@ -25,9 +25,26 @@ game.userselect = (function(window, document) {
       });
 
       _$characterSelect.removeClass('hidden');
-      _$availableJournals.combobox();
+      _$combobox = _$availableJournals.combobox();
       _$userSubmit.css('height', $('#combobox').outerHeight());
       _$characterSelect.addClass('hidden');
+    },
+
+    loadUser: function(username) {
+      $.ajax({
+        url: '/lj/' + username + '/select',
+        success: function(data) {
+          game.sockets.selectUser(username);
+          // chatroom.ljdata.data = data;
+          // chatroom.chatwindow.show();
+          // chatroom.chatwindow.initSentenceAvailability();
+          // self.hide();
+        }
+      });
+    },
+
+    getComboboxValue: function() {
+      return $('#combobox').val();
     }
   };
 

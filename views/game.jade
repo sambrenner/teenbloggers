@@ -6,6 +6,8 @@ block styles
   link(rel="stylesheet", type="text/css", href="stylesheets/game.css")
 
 block scripts
+  script(type="text/javascript", src="/socket.io/socket.io.js")
+
   script(type="text/javascript", src="/javascripts/libs/jquery-2.1.0.min.js")
   script(type="text/javascript", src="/javascripts/libs/jquery-ui-1.10.4.custom.min.js")
   script(type="text/javascript", src="/javascripts/libs/jquery-ui.combobox.js")
@@ -22,6 +24,7 @@ block scripts
   script(type="text/javascript", src="/javascripts/game/game.main.js")
   script(type="text/javascript", src="/javascripts/game/game.ui.js")
   script(type="text/javascript", src="/javascripts/game/game.userselect.js")
+  script(type="text/javascript", src="/javascripts/game/game.sockets.js")
 
 block content
   section(id="game")

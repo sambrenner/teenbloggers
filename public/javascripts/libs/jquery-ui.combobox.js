@@ -185,7 +185,7 @@
                    } else {
 
                       // remove invalid value, as it didn't match anything
-                      $el.val( '' );
+                      //$el.val( '' );
 
                       // Internally, term must change before another search is performed
                       // if the same search is performed again, the menu won't be shown
