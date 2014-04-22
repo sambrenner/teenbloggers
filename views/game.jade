@@ -2,10 +2,14 @@ extends layout
 
 block styles
   link(href="http://fonts.googleapis.com/css?family=VT323" rel="stylesheet" type="text/css")
+  link(rel="stylesheet", type="text/css", href="stylesheets/jquery-ui.css")
   link(rel="stylesheet", type="text/css", href="stylesheets/game.css")
 
 block scripts
   script(type="text/javascript", src="/javascripts/libs/jquery-2.1.0.min.js")
+  script(type="text/javascript", src="/javascripts/libs/jquery-ui-1.10.4.custom.min.js")
+  script(type="text/javascript", src="/javascripts/libs/jquery-ui.combobox.js")
+  script(type="text/javascript", src="/javascripts/libs/jquery-ui.combobox.js")
   script(type="text/javascript", src="/javascripts/libs/createjs.min.js")
 
   script(type="text/javascript", src="/javascripts/libs/scummesque/Game.js")
@@ -28,15 +32,13 @@ block content
       h1 Adventures of Teen Bloggers
       a(href="#" id="begin") Click to Begin
 
-    section(id="character_select" class="hidden modal")
+    section(id="character_select" class="modal")
       h2 Choose Your Teen
       p You will become the adolescent. You will bring their most private thoughts to the public internet. Choose wisely.
       p Any LiveJournal account will work. More are available <a id="lj_link" href="http://www.livejournal.com/ratings/users/?page=2000" target="_blank">here</a>.
       form
-        select(id="available_journals")
-          option Select a LiveJournal
+        select(id="available_journals" data-placeholder="Enter or Choose a LiveJournal")
 
-        input(id="new_journal" type="text", placeholder="or enter any LiveJournal username")
         input(id="user_submit" type="submit", value="Select")
 
   section(id="console" class="hidden")

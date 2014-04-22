@@ -34,15 +34,11 @@ game.main = (function(window, document) {
         enter: function() {
           var $welcomeSection = $('#welcome');
           var $characterSelectSection = $('#character_select');
-          var $availableJournals = $('#available_journals');
           var $beginBtn = $('#begin');
           var level = this;
 
-          game.userselect.getUsernames(function(data) {
-            for (var i = 0; i < data.length; i++) {
-              $availableJournals.append('<option>' + data[i].username + '</option>');
-            };
-          });
+          game.userselect.init();
+          game.userselect.seedUsernames();
 
           $welcomeSection.removeClass('hidden');
 
