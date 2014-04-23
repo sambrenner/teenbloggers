@@ -1,6 +1,7 @@
 var dbUrl = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'localhost:27017';
 var collections = ['livejournals'];
 var db = require('mongojs').connect(dbUrl, collections);
+var validator = require('validator');
 
 var _loadJournalCorpus = function(username, callback) {
   var request = require('request');
@@ -8,7 +9,7 @@ var _loadJournalCorpus = function(username, callback) {
   var xml2js = require('xml2js');
   var parser = new xml2js.Parser();
 
-  request('http://' + username + '.livejournal.com/data/rss', function(e, r, b) {
+  request('http://' + encodeURIComponent(username) + '.livejournal.com/data/rss', function(e, r, b) {
     if (!e) {
       if(r.statusCode == 200) {
         parser.parseString(b, function(e, r) {
@@ -38,7 +39,7 @@ var _loadJournalCorpus = function(username, callback) {
         callback(null, r.statusCode);
       }
     } else {
-      //server error
+      callback(null, 'server_error');
     }
   });
 };
@@ -84,7 +85,7 @@ var _getJournal = function(username, select, success, failure) {
       'new': true
     }, function(err, livejournal) {
     if(err||!livejournal) {
-      console.log('livejournal not found. getting and saving')
+      console.log('livejournal ' + username + ' not found. getting and saving')
 
       _loadJournalCorpus(username, function(livejournal, error) {
         if(!error) {
@@ -135,7 +136,7 @@ exports.getJournal = function(req, res) {
 };
 
 exports.searchJournals = function(req, res) {
-  var searchRegex = new RegExp('\\b' + req.params.term + '\\b', 'i');
+  var searchRegex = new RegExp('\\b' + validator.escape(req.params.term) + '\\b', 'i');
 
   db.livejournals.find({ 'sentences': { '$elemMatch': { text: searchRegex } } }, { 'username': 1, 'sentences.text': 1 }, function(err, data) {
     if(data.length > 0) {
@@ -160,7 +161,7 @@ exports.searchJournals = function(req, res) {
 };
 
 exports.selectJournal = function(req, res) {
-  _getJournal(req.params.username, true, function(data) {
+  _getJournal(validator.escape(req.params.username), true, function(data) {
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(data));
   }, function(error) {
@@ -171,7 +172,7 @@ exports.selectJournal = function(req, res) {
 
 exports.deselectJournal = function(username, callback) {
   db.livejournals.update({
-    'username': username
+    'username': validator.escape(username)
   }, {
     '$set': { 'available': true }
   }, function() {
@@ -180,7 +181,7 @@ exports.deselectJournal = function(username, callback) {
 };
 
 exports.deselectJournalWeb = function(req, res) {
-  deselectJournal(req.params.username, function(data) {
+  deselectJournal(validator.escape(req.params.username), function(data) {
     res.send(data);
   });
 };

@@ -38,12 +38,9 @@ game.userselect = (function(window, document) {
             error();
           } else {
             game.sockets.selectUser(username);
+            game.ljdata.data = data;
             success();
           }
-          // chatroom.ljdata.data = data;
-          // chatroom.chatwindow.show();
-          // chatroom.chatwindow.initSentenceAvailability();
-          // self.hide();
         },
         error: function(e) {
           console.log(e);

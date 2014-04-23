@@ -13,6 +13,7 @@
     "xml2js": "*",
     "htmlstrip-native": "*",
     "mongojs": "*",
+    "validator": "*",
     "socket.io": "*"
   }
 }
