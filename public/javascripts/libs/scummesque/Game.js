@@ -40,6 +40,16 @@ Scummesque.Game.prototype.addEvents = function() {
   $window.on('level_click', function() {
     game.console.clearText(true);
   });
+
+  $window.on('display_console_choices', function(e) {
+    game.console.lock = true;
+    game.console.displayChoiceOptions(e.choices, e.choiceClickHandler, e.exitHandler);
+  });
+
+  $window.on('unlock_console', function() {
+    game.console.lock = false;
+    game.console.clearText(true);
+  });
 }
 
 Scummesque.Game.prototype.currentLevel = null;

@@ -27,7 +27,7 @@ game.main = (function(window, document) {
 
     return [
 
-      //Intro Screen
+      //LEVEL 0: Intro Screen
       new Scummesque.Level({
         backgroundUrl: '/images/game/establishingshot.gif',
         domElementOverlay: $('#intro'),
@@ -76,7 +76,7 @@ game.main = (function(window, document) {
         }
       }),
 
-      //Hallway
+      //LEVEL 1: Hallway
       new Scummesque.Level({
         backgroundUrl: '/images/game/hallway.gif',
         actor: _makeActor(),
@@ -89,7 +89,7 @@ game.main = (function(window, document) {
             onFocus: function() {
               $window.trigger({
                 type: 'display_console_text',
-                text: 'This one trophy has a bunch of LEDs in it. I wonder who made that?',
+                text: 'First place in the synchronized swimming regionals. Cool, I guess. This other trophy has LEDs in it, I wonder where that came from?',
                 constant: true
               });
             }
@@ -101,7 +101,7 @@ game.main = (function(window, document) {
             position: {x: 693, y: 116},
             onFocus: function() {
               // go to next level
-              _scummesque.transitionToLevel(2);
+              _scummesque.transitionToLevel(3);
             }
           }),
           new Scummesque.Interactable({
@@ -111,6 +111,7 @@ game.main = (function(window, document) {
             position: {x: 504, y: 141},
             onFocus: function() {
               // zoom in on couple
+              _scummesque.transitionToLevel(2);
             }
           })
         ],
@@ -118,8 +119,26 @@ game.main = (function(window, document) {
           
         }
       }),
+
+      //LEVEL 2: Flirting Couple
+      new Scummesque.Level({
+        backgroundUrl: '/images/game/flirtingcouple.gif',
+        enter: function() {
+          $window.trigger({
+            type: 'display_console_choices',
+            choices: game.ljdata.getRandomSentences(4),
+            choiceClickHandler: function() {
+              console.log('choice click');
+            },
+            exitHandler: function() {
+              $window.trigger('unlock_console');
+              _scummesque.transitionToLevel(1);
+            }
+          });
+        }
+      }),
       
-      //Computer Lab
+      //LEVEL 3: Computer Lab
       new Scummesque.Level({
         backgroundUrl: '/images/game/complab.gif',
         actor: _makeActor(),
