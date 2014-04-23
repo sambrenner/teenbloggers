@@ -4,6 +4,7 @@ Scummesque.Level = function(options) {
   for (var o in options) { this[o] = options[o]; }
 
   if(!this.container) this.container = new createjs.Container();
+  if(!this.slideable) this.slideable = false;
 };
 
 Scummesque.Level.prototype.init = function() {
@@ -46,9 +47,9 @@ Scummesque.Level.prototype.initActor = function() {
   var container = level.background ? level.background : level.container;
   container.addEventListener('click', function(e) {
     $(window).trigger('level_click');
-    
+
     actor.walkTo({x: e.localX}, 80, function() {
-      level.checkContainerSlide(e.localX);
+      if(level.slideable) level.checkContainerSlide(e.localX);
     });
   });
 }
@@ -62,7 +63,7 @@ Scummesque.Level.prototype.addEvents = function() {
       var objCoords = e.mouseEvent.currentTarget.localToGlobal(e.mouseEvent.localX, e.mouseEvent.localY);
       objCoords = level.background.globalToLocal(objCoords.x, objCoords.y);
       level.actor.walkToAndTurn({x: objCoords.x}, 80, function() {
-        level.checkContainerSlide(level.actor.container.x);
+        if(level.slideable) level.checkContainerSlide(level.actor.container.x);
         e.onFocus();
       });
     }

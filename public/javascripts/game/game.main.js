@@ -79,6 +79,7 @@ game.main = (function(window, document) {
       //LEVEL 1: Hallway
       new Scummesque.Level({
         backgroundUrl: '/images/game/hallway.gif',
+        slideable: true,
         actor: _makeActor(),
         interactables: [
           new Scummesque.Interactable({
