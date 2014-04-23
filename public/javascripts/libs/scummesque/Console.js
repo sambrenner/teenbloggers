@@ -26,5 +26,11 @@ Scummesque.Console.prototype.clearText = function(clearConstant) {
 }
 
 Scummesque.Console.prototype.displayChoiceOptions = function(choices) {
+  var $list = $('<ul></ul>');
 
+  for (var i = 0; i < choices.length; i++) {
+    $list.append('<li>' + choices[i] + '</li>');
+  };
+
+  this.domElement.empty().append($list);
 };
