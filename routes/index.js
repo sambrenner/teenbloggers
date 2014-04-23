@@ -9,30 +9,36 @@ var _loadJournalCorpus = function(username, callback) {
   var parser = new xml2js.Parser();
 
   request('http://' + username + '.livejournal.com/data/rss', function(e, r, b) {
-    if (!e && r.statusCode == 200) {
-      parser.parseString(b, function(e, r) {
-        var items = r.rss.channel[0].item;
-        var corpus = '';
-        
-        for(var i=0; i<items.length; i++) {
-          var item = items[i];
-          var stripOptions = {
-            include_script: false,
-            include_style: false,
-            compact_whitespace: true
-          };
+    if (!e) {
+      if(r.statusCode == 200) {
+        parser.parseString(b, function(e, r) {
+          var items = r.rss.channel[0].item;
+          var corpus = '';
+          
+          for(var i=0; i<items.length; i++) {
+            var item = items[i];
+            var stripOptions = {
+              include_script: false,
+              include_style: false,
+              compact_whitespace: true
+            };
 
-          var processedText = stripper.html_strip(item.description[0], stripOptions);
+            var processedText = stripper.html_strip(item.description[0], stripOptions);
 
-          corpus += (processedText + ' ');
-        }
+            corpus += (processedText + ' ');
+          }
 
-        var JournalsInfo = {};
-        JournalsInfo.username = username;
-        JournalsInfo.corpus = corpus;
+          var JournalsInfo = {};
+          JournalsInfo.username = username;
+          JournalsInfo.corpus = corpus;
 
-        callback(JournalsInfo);
-      });
+          callback(JournalsInfo);
+        });
+      } else {
+        callback(null, r.statusCode);
+      }
+    } else {
+      //server error
     }
   });
 };
@@ -71,7 +77,7 @@ var _extractSentences = function(corpus) {
   return sentences;
 };
 
-var _getJournal = function(username, select, success) {
+var _getJournal = function(username, select, success, failure) {
   db.livejournals.findAndModify({
       'query': {'username': username },
       'update': {'$set': {'available': !select}},
@@ -80,16 +86,20 @@ var _getJournal = function(username, select, success) {
     if(err||!livejournal) {
       console.log('livejournal not found. getting and saving')
 
-      _loadJournalCorpus(username, function(livejournal) {
-        livejournal.questions = _extractQuestions(livejournal.corpus);
-        livejournal.selfReferences = _extractSelfReferences(livejournal.corpus);
-        livejournal.sentences = _extractSentences(livejournal.corpus);
-        livejournal.available = !select;
+      _loadJournalCorpus(username, function(livejournal, error) {
+        if(!error) {
+          livejournal.questions = _extractQuestions(livejournal.corpus);
+          livejournal.selfReferences = _extractSelfReferences(livejournal.corpus);
+          livejournal.sentences = _extractSentences(livejournal.corpus);
+          livejournal.available = !select;
 
-        db.livejournals.save(livejournal, function(err, saved) {
-          livejournal.status = 'saved';
-          success(livejournal);
-        });
+          db.livejournals.save(livejournal, function(err, saved) {
+            livejournal.status = 'saved';
+            success(livejournal);
+          });
+        } else {
+          failure(error);
+        }
       });
     } else {
       livejournal.status = 'found';
@@ -118,6 +128,9 @@ exports.getJournal = function(req, res) {
   _getJournal(req.params.username, false, function(data) {
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(data));
+  }, function(error) {
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify({error: error}));
   });
 };
 
@@ -150,6 +163,9 @@ exports.selectJournal = function(req, res) {
   _getJournal(req.params.username, true, function(data) {
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(data));
+  }, function(error) {
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify({error: error}));
   });
 };
 

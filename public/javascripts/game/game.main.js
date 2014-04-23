@@ -35,6 +35,8 @@ game.main = (function(window, document) {
           var $welcomeSection = $('#welcome');
           var $characterSelectSection = $('#character_select');
           var $beginBtn = $('#begin');
+          var $characterError = $('#character_error');
+
           var level = this;
 
           game.userselect.init();
@@ -52,9 +54,19 @@ game.main = (function(window, document) {
           $characterSelectSection.find('form').on('submit', function(e) {
             e.preventDefault();
 
-            game.userselect.loadUser(game.userselect.getComboboxValue());
-
-            level.exit();
+            $characterError.addClass('hidden').text('');
+            
+            var username = game.userselect.getComboboxValue();
+            if(username == '') {
+              $characterError.removeClass('hidden').text('Please enter a username.');
+            }
+            else {
+              game.userselect.loadUser(username, function() {
+                level.exit();
+              }, function() {
+                $characterError.removeClass('hidden').text('Username invalid, please enter an active LiveJournal username!');
+              });
+            }
           });
         },
         exit: function() {

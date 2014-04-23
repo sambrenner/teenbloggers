@@ -30,21 +30,30 @@ game.userselect = (function(window, document) {
       _$characterSelect.addClass('hidden');
     },
 
-    loadUser: function(username) {
+    loadUser: function(username, success, error) {
       $.ajax({
         url: '/lj/' + username + '/select',
         success: function(data) {
-          game.sockets.selectUser(username);
+          if(data.error) {
+            error();
+          } else {
+            game.sockets.selectUser(username);
+            success();
+          }
           // chatroom.ljdata.data = data;
           // chatroom.chatwindow.show();
           // chatroom.chatwindow.initSentenceAvailability();
           // self.hide();
+        },
+        error: function(e) {
+          console.log(e);
+          error();
         }
       });
     },
 
     getComboboxValue: function() {
-      return $('#combobox').val();
+      return $('#combobox').val().trim();
     }
   };
 

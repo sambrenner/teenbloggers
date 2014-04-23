@@ -1,6 +1,7 @@
 body { background: url('/images/bg.jpg') 0 0 repeat; font-family: 'VT323'; }
 
 .hidden { display: none; }
+.error { background-color: #F30; color: #000; }
 
 a, h1, h2 { color: #F30; }
 h1 { font-size: 230%; margin-bottom: 8px; }
@@ -24,5 +25,5 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 #console { -webkit-transiton: bottom 2s ease; -moz-transition: bottom .5s ease; -o-transition: bottom .5s ease; transition: bottom .5s ease; }
 #console.hidden { display: block; bottom: -118px; }
 
-#character_select form { margin-top: 14px; }
+#character_select form { margin: 14px 0; }
 #user_submit { margin: 0; vertical-align: bottom; }
