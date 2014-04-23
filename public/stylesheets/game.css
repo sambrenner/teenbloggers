@@ -6,7 +6,7 @@ body { background: url('/images/bg.jpg') 0 0 repeat; font-family: 'VT323'; }
 a, h1, h2 { color: #F30; }
 h1 { font-size: 230%; margin-bottom: 8px; }
 h2 { font-size: 180%; margin-bottom: 6px; }
-p { font-size: 130%; margin-bottom: 4px; }
+p { font-size: 130%; margin-bottom: 6px; }
 
 .ui-autocomplete { max-height: 120px; overflow: scroll; }
 .ui-state-default, .ui-widget-content, input, button { background: #000; border: 1px solid #FFF; color: #FFF; font-family: 'VT323'; font-size: 26px; }
