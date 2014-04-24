@@ -144,6 +144,62 @@ game.main = (function(window, document) {
       new Scummesque.Level({
         backgroundUrl: '/images/game/complab.gif',
         actor: _makeActor(),
+        interactables: [
+          new Scummesque.Interactable({
+            action: 'Use',
+            name: 'Computer',
+            imageUrl: '/images/game/computerscreen.gif',
+            position: {x: 68, y: 180},
+            onFocus: function() {
+              // go to next level
+              //_scummesque.transitionToLevel(4);
+            }
+          }),
+          new Scummesque.Interactable({
+            action: 'Use',
+            name: 'Computer',
+            imageUrl: '/images/game/computerscreen.gif',
+            position: {x: 173, y: 180},
+            onFocus: function() {
+              // go to next level
+              //_scummesque.transitionToLevel(4);
+            }
+          }),
+          new Scummesque.Interactable({
+            action: 'Use',
+            name: 'Computer',
+            imageUrl: '/images/game/computerscreen.gif',
+            position: {x: 301, y: 180},
+            onFocus: function() {
+              // go to next level
+              //_scummesque.transitionToLevel(4);
+            }
+          }),
+          new Scummesque.Interactable({
+            action: 'Use',
+            name: 'Computer',
+            imageUrl: '/images/game/computerscreen.gif',
+            position: {x: 406, y: 180},
+            onFocus: function() {
+              // go to next level
+              //_scummesque.transitionToLevel(4);
+            }
+          }),
+          new Scummesque.Interactable({
+            action: 'Look at',
+            name: 'Poster',
+            imageUrl: '/images/game/poster.gif',
+            position: {x: 517, y: 90},
+            onFocus: function() {
+              $window.trigger({
+                type: 'display_console_text',
+                text: 'Woah! Sick breaker!',
+                constant: true
+              });
+            }
+          }),
+
+        ],
         enter: function() {
           
         }
