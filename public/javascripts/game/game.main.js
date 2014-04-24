@@ -1,7 +1,7 @@
 var game = game || {};
 
 game.main = (function(window, document) {
-  var _scummesque;
+  var _scummesque, _levels;
 
   var _makeActor = function() {
     return new Scummesque.Actor({
@@ -32,6 +32,8 @@ game.main = (function(window, document) {
         backgroundUrl: '/images/game/establishingshot.gif',
         domElementOverlay: $('#intro'),
         enter: function() {
+          //_scummesque.setActiveLevel(0);
+
           var $welcomeSection = $('#welcome');
           var $characterSelectSection = $('#character_select');
           var $beginBtn = $('#begin');
@@ -62,17 +64,13 @@ game.main = (function(window, document) {
             }
             else {
               game.userselect.loadUser(username, function() {
-                level.exit();
+                level.domElementOverlay.addClass('hidden');
+                _scummesque.transitionToLevel(1);
               }, function() {
                 $characterError.removeClass('hidden').text('Username invalid, please enter an active LiveJournal username!');
               });
             }
           });
-        },
-        exit: function() {
-          this.domElementOverlay.addClass('hidden');
-
-          _scummesque.transitionToLevel(1);
         }
       }),
 
@@ -117,7 +115,7 @@ game.main = (function(window, document) {
           })
         ],
         enter: function() {
-          
+          _scummesque.setActiveLevel(1);
         }
       }),
 
@@ -125,6 +123,8 @@ game.main = (function(window, document) {
       new Scummesque.Level({
         backgroundUrl: '/images/game/flirtingcouple.gif',
         enter: function() {
+          _scummesque.setActiveLevel(2);
+
           $window.trigger({
             type: 'display_console_choices',
             choices: game.ljdata.getRandomSentences(4),
@@ -152,7 +152,7 @@ game.main = (function(window, document) {
             position: {x: 68, y: 180},
             onFocus: function() {
               // go to next level
-              //_scummesque.transitionToLevel(4);
+              _scummesque.transitionToLevel(4);
             }
           }),
           new Scummesque.Interactable({
@@ -162,7 +162,7 @@ game.main = (function(window, document) {
             position: {x: 173, y: 180},
             onFocus: function() {
               // go to next level
-              //_scummesque.transitionToLevel(4);
+              _scummesque.transitionToLevel(4);
             }
           }),
           new Scummesque.Interactable({
@@ -172,7 +172,7 @@ game.main = (function(window, document) {
             position: {x: 301, y: 180},
             onFocus: function() {
               // go to next level
-              //_scummesque.transitionToLevel(4);
+              _scummesque.transitionToLevel(4);
             }
           }),
           new Scummesque.Interactable({
@@ -182,7 +182,7 @@ game.main = (function(window, document) {
             position: {x: 406, y: 180},
             onFocus: function() {
               // go to next level
-              //_scummesque.transitionToLevel(4);
+              _scummesque.transitionToLevel(4);
             }
           }),
           new Scummesque.Interactable({
@@ -198,10 +198,18 @@ game.main = (function(window, document) {
               });
             }
           }),
-
         ],
         enter: function() {
-          
+          _scummesque.setActiveLevel(3);
+        }
+      }),
+
+      //LEVEL 4: Chatroom
+      new Scummesque.Level({
+        backgroundUrl: '/images/game/computerbg.gif',
+        domElementOverlay: $('#chatroom'),
+        enter: function() {
+          _scummesque.setActiveLevel(4);
         }
       })
     ];
@@ -212,9 +220,11 @@ game.main = (function(window, document) {
       game.ui.init();
       game.sockets.init();
 
+      _levels = _makeLevels();
+
       _scummesque = new Scummesque.Game({
         canvasId: 'game_canvas',
-        levels: _makeLevels(),
+        levels: _levels,
         console: new Scummesque.Console({
           domElement: $('#console')
         }),

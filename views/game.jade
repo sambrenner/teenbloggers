@@ -47,7 +47,17 @@ block content
       p(id="character_error" class="error hidden")
 
   section(id="console" class="hidden")
-    p Test
+
+  section(id="chatroom" class="hidden")
+    form(id="chat_form")
+      select(id="available_sentences")
+      input(id="chat_submit" type="submit" value="Say It!")
+
+    ul(id="chat_window")
+
+    ul(id="online_users")
+      li
+        h2 Online Users
 
 block footer
   script(type="text/javascript").

@@ -33,7 +33,7 @@ Scummesque.Game.prototype.addEvents = function() {
     game.console.clearText();
   });
 
-  $window.on('interactable_click', function() {
+  $window.on('interactable_click', function(e) {
     game.console.clearText(true);
   });
 
@@ -78,4 +78,10 @@ Scummesque.Game.prototype.start = function() {
 
 Scummesque.Game.prototype.animate = function() {
   this.stage.update();
+}
+
+Scummesque.Game.prototype.setActiveLevel = function(level) {
+  for (var i = 0; i < this.levels.length; i++) {
+    this.levels[i].active = (i == level);
+  };
 }

@@ -7,6 +7,7 @@ Scummesque.Level = function(options) {
   if(!this.slideable) this.slideable = false;
 
   this.inited = false;
+  this.active = false;
 };
 
 Scummesque.Level.prototype.init = function() {
@@ -65,6 +66,8 @@ Scummesque.Level.prototype.addEvents = function() {
   var level = this;
 
   $window.on('interactable_click', function(e) {
+    if(!level.active) return;
+
     if(level.actor) {
       var objCoords = e.mouseEvent.currentTarget.localToGlobal(e.mouseEvent.localX, e.mouseEvent.localY);
       objCoords = level.background.globalToLocal(objCoords.x, objCoords.y);
@@ -73,6 +76,8 @@ Scummesque.Level.prototype.addEvents = function() {
         e.onFocus();
       });
     }
+
+    //e.stopImmediatePropagation();
   });
 };
 
