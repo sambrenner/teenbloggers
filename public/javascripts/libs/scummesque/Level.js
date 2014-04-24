@@ -5,27 +5,33 @@ Scummesque.Level = function(options) {
 
   if(!this.container) this.container = new createjs.Container();
   if(!this.slideable) this.slideable = false;
+
+  this.inited = false;
 };
 
 Scummesque.Level.prototype.init = function() {
-  this.addEvents();
+  if(!this.inited) {
+    this.addEvents();
 
-  if(this.backgroundUrl) {
-    this.background = this.container.addChild(new createjs.Bitmap(this.backgroundUrl));
-  }
-
-  if(this.interactables) {
-    for(var i=0; i<this.interactables.length; i++) {
-      var interactable = this.interactables[i];
-      interactable.init();
-
-      this.container.addChild(interactable.container);
+    if(this.backgroundUrl) {
+      this.background = this.container.addChild(new createjs.Bitmap(this.backgroundUrl));
     }
-  }
 
-  if(this.actor) {
-    this.container.addChild(this.actor.container);
-    this.initActor();
+    if(this.interactables) {
+      for(var i=0; i<this.interactables.length; i++) {
+        var interactable = this.interactables[i];
+        interactable.init();
+
+        this.container.addChild(interactable.container);
+      }
+    }
+
+    if(this.actor) {
+      this.container.addChild(this.actor.container);
+      this.initActor();
+    }
+
+    this.inited = true;
   }
 
   if(this.enter) this.enter();
