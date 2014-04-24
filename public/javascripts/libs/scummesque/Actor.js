@@ -42,7 +42,7 @@ Scummesque.Actor.prototype.walkTo = function(position, speed, onArrive) {
   var distance = Scummesque.Utils.distance(fromX, fromY, toX, toY);
   var time = Scummesque.Utils.distanceToTime(distance, speed);
 
-  createjs.Tween.get(this.container).to({x: toX, y: toY}, time).call(function() {
+  createjs.Tween.get(this.container, {override: true}).to({x: toX, y: toY}, time).call(function() {
     actor.sprite.gotoAndPlay('standSide');
     if(onArrive) onArrive();
   });
