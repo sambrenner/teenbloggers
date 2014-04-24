@@ -5,9 +5,11 @@ Scummesque.Console = function(options) {
 
   if(!this.domElement) console.error('Consoles require DOM Elements');
   if(!this.constantText) this.constantText = '';
+  if(!this.defaultText) this.defaultText = '';
   if(!this.lock) this.lock = false;
 
   this.defaultHeight = this.domElement.height();
+  this.clearText();
 };
 
 Scummesque.Console.prototype.show = function() {
@@ -31,7 +33,8 @@ Scummesque.Console.prototype.displayText = function(text, constant) {
 Scummesque.Console.prototype.clearText = function(clearConstant) {
   if(this.lock) return;
   if(clearConstant) this.constantText = '';
-  this.domElement.empty().append('<p>' + this.constantText + '</p>');
+
+  this.domElement.empty().append('<p>' + ((this.constantText == '') ? this.defaultText : this.constantText) + '</p>');
 }
 
 Scummesque.Console.prototype.displayChoiceOptions = function(choices, choiceClickHandler, exitHandler) {

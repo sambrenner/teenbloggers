@@ -226,7 +226,8 @@ game.main = (function(window, document) {
         canvasId: 'game_canvas',
         levels: _levels,
         console: new Scummesque.Console({
-          domElement: $('#console')
+          domElement: $('#console'),
+          defaultText: 'Walk to'
         }),
         autoStart: true
       });
