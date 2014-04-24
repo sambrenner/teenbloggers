@@ -6,6 +6,8 @@ Scummesque.Console = function(options) {
   if(!this.domElement) console.error('Consoles require DOM Elements');
   if(!this.constantText) this.constantText = '';
   if(!this.lock) this.lock = false;
+
+  this.defaultHeight = this.domElement.height();
 };
 
 Scummesque.Console.prototype.show = function() {
@@ -15,6 +17,10 @@ Scummesque.Console.prototype.show = function() {
 Scummesque.Console.prototype.hide = function() {
   this.domElement.addClass('hidden');
 };
+
+Scummesque.Console.prototype.resetHeight = function() {
+  this.domElement.css('height', this.defaultHeight);
+}
 
 Scummesque.Console.prototype.displayText = function(text, constant) {
   if(this.lock) return;
@@ -41,5 +47,5 @@ Scummesque.Console.prototype.displayChoiceOptions = function(choices, choiceClic
     $list.append($exitBtn)
   }
 
-  this.domElement.empty().append($list);
+  this.domElement.empty().append($list).css('height', $list.height());
 };

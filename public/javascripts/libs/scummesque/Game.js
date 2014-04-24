@@ -50,6 +50,10 @@ Scummesque.Game.prototype.addEvents = function() {
     game.console.lock = false;
     game.console.clearText(true);
   });
+
+  $window.on('reset_console_height', function() {
+    game.console.resetHeight();
+  });
 }
 
 Scummesque.Game.prototype.currentLevel = null;

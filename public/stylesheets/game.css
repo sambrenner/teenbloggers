@@ -25,11 +25,12 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 #main_content > section { position: absolute; }
 
 #console { background-color: #000; bottom: 0; height: 110px; padding: 4px 2%; position: absolute; width: 96%; }
-#console { -webkit-transiton: bottom 2s ease; -moz-transition: bottom .5s ease; -o-transition: bottom .5s ease; transition: bottom .5s ease; }
+#console { -webkit-transiton: height .5s ease, bottom .5s ease; -moz-transition: height .5s ease, bottom .5s ease; -o-transition: height .5s ease, bottom .5s ease; transition: height .5s ease, bottom .5s ease; }
 #console.hidden { display: block; bottom: -118px; }
-#console li { margin-bottom: 3px; }
-#console li a { color: #FFF; text-decoration: none; }
-#console li a:hover { color: #F30; cursor: alias; }
+#console ul { position: absolute; }
+#console ul li { margin-bottom: 3px; }
+#console ul li a { color: #FFF; text-decoration: none; }
+#console ul li a:hover { color: #F30; cursor: alias; }
 
 #character_select form { margin: 14px 0; }
 #user_submit { margin: 0; vertical-align: bottom; }

@@ -133,6 +133,7 @@ game.main = (function(window, document) {
             },
             exitHandler: function() {
               $window.trigger('unlock_console');
+              $window.trigger('reset_console_height');
               _scummesque.transitionToLevel(1);
             }
           });
