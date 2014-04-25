@@ -50,14 +50,16 @@
              input, wrapper;
 
          input = this.uiInput =
-                  $( "<input />" )
-                      .insertAfter(select)
-                      .attr('id', 'combobox')
-                      .addClass("ui-widget ui-widget-content ui-corner-left ui-combobox-input")
-                      .val( select.children(':selected').text() )
-                      .attr('tabindex', select.attr( 'tabindex'))
-                      .attr('placeholder', select.data('placeholder'))
-                      .attr('type', 'text');
+          $( "<input />" )
+            .insertAfter(select)
+            .attr('id', 'combobox')
+            .addClass("ui-widget ui-widget-content ui-corner-left ui-combobox-input")
+            .val( select.children(':selected').text() )
+            .attr('tabindex', select.attr( 'tabindex'))
+            .attr('placeholder', select.data('placeholder'))
+            .attr('type', 'text');
+
+        if(this.options.noInput) input.attr('disabled', '1');
 
          wrapper = this.uiCombo =
             input.wrap( '<span>' )
