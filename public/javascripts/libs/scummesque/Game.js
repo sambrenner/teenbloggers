@@ -25,6 +25,10 @@ Scummesque.Game.prototype.addEvents = function() {
     game.console.show();
   });
 
+  $window.on('hide_console', function() {
+    game.console.hide();
+  });
+
   $window.on('display_console_text', function(e) {
     game.console.displayText(e.text, e.constant);
   });

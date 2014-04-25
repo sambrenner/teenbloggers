@@ -5,6 +5,7 @@ body { background: url('/images/bg.jpg') 0 0 repeat; font-family: 'VT323'; }
 
 .hidden { display: none; }
 .error { background-color: #F30; color: #000; }
+.container { overflow: auto; }
 
 a, h1, h2 { color: #F30; }
 h1 { font-size: 230%; margin-bottom: 8px; }
@@ -18,7 +19,9 @@ p { font-size: 130%; margin-bottom: 6px; }
 .ui-menu a, .ui-menu-item a { color: #FFF; }
 .ui-menu a strong, .ui-menu-item a strong { border-bottom: 1px solid #FFF; }
 input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
-#combobox { width: 295px; }
+
+#intro .combobox { width: 295px; }
+#chatroom .combobox { width: 480px; }
 
 #main_content { background-color: #040404; border: 3px solid #FEFEFE; color: #FEFEFE; height: 480px; overflow: hidden; position: absolute; width: 640px; }
 #main_content .modal { background-color: rgba(0,0,0,0.8); padding: 18px; width: 400px; }
@@ -34,3 +37,8 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 
 #character_select form { margin: 14px 0; }
 #user_submit { margin: 0; vertical-align: bottom; }
+
+#chatroom { height: 440px; padding: 20px; width: 600px; }
+#chat_window { background: #FFF; float: left; height: 340px; width: 400px; }
+#online_users { background: #FFF; float: right; height: 340px; width: 190px; }
+#chat_form { margin: 14px 0; }

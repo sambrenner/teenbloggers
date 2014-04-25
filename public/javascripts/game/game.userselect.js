@@ -26,7 +26,7 @@ game.userselect = (function(window, document) {
 
       _$characterSelect.removeClass('hidden');
       _$combobox = _$availableJournals.combobox();
-      _$userSubmit.css('height', $('#combobox').outerHeight());
+      _$userSubmit.css('height', _$characterSelect.find('.combobox').outerHeight());
       _$characterSelect.addClass('hidden');
     },
 
@@ -50,7 +50,7 @@ game.userselect = (function(window, document) {
     },
 
     getComboboxValue: function() {
-      return $('#combobox').val().trim();
+      return _$combobox.val().trim();
     }
   };
 

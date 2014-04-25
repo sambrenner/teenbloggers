@@ -209,8 +209,10 @@ game.main = (function(window, document) {
         domElementOverlay: $('#chatroom'),
         enter: function() {
           _scummesque.setActiveLevel(4);
+          $(window).trigger('hide_console');
 
-
+          //offload functionality to game.chatroom.js
+          game.chatroom.init();
         }
       })
     ];

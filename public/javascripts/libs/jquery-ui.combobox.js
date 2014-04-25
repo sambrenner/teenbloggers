@@ -52,8 +52,7 @@
          input = this.uiInput =
           $( "<input />" )
             .insertAfter(select)
-            .attr('id', 'combobox')
-            .addClass("ui-widget ui-widget-content ui-corner-left ui-combobox-input")
+            .addClass("combobox ui-widget ui-widget-content ui-corner-left ui-combobox-input")
             .val( select.children(':selected').text() )
             .attr('tabindex', select.attr( 'tabindex'))
             .attr('placeholder', select.data('placeholder'))

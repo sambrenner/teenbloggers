@@ -26,6 +26,7 @@ block scripts
   script(type="text/javascript", src="/javascripts/game/game.userselect.js")
   script(type="text/javascript", src="/javascripts/game/game.sockets.js")
   script(type="text/javascript", src="/javascripts/game/game.ljdata.js")
+  script(type="text/javascript", src="/javascripts/game/game.chatroom.js")
 
 block content
   section(id="game")
@@ -49,15 +50,21 @@ block content
   section(id="console" class="hidden")
 
   section(id="chatroom" class="hidden")
+    section(class="container")
+      ul(id="chat_window")
+      
+      ul(id="online_users")
+        li
+          h2 Online Users
+
     form(id="chat_form")
       select(id="available_sentences")
+        option Sample Sentence
+        option Sample Sentence
+        option Sample Sentence
+        option Sample Sentence
+
       input(id="chat_submit" type="submit" value="Say It!")
-
-    ul(id="chat_window")
-
-    ul(id="online_users")
-      li
-        h2 Online Users
 
 block footer
   script(type="text/javascript").
