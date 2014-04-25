@@ -32,6 +32,8 @@ Scummesque.Level.prototype.init = function() {
       this.initActor();
     }
 
+    if(this.domElementOverlay) this.domElementOverlay.removeClass('hidden');
+
     this.inited = true;
   }
 
@@ -90,4 +92,8 @@ Scummesque.Level.prototype.shiftTo = function(x, onComplete) {
   createjs.Tween.get(this.container).to({x: x}, 1000, createjs.Ease.quadInOut).call(function() {
     if(onComplete) onComplete();
   });
+}
+
+Scummesque.Level.prototype.hideDomElement = function() {
+  if(this.domElementOverlay) this.domElementOverlay.addClass('hidden');
 }

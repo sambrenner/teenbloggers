@@ -64,7 +64,6 @@ game.main = (function(window, document) {
             }
             else {
               game.userselect.loadUser(username, function() {
-                level.domElementOverlay.addClass('hidden');
                 _scummesque.transitionToLevel(1);
               }, function() {
                 $characterError.removeClass('hidden').text('Username invalid, please enter an active LiveJournal username!');
@@ -210,6 +209,8 @@ game.main = (function(window, document) {
         domElementOverlay: $('#chatroom'),
         enter: function() {
           _scummesque.setActiveLevel(4);
+
+
         }
       })
     ];
