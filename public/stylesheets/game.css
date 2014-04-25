@@ -18,8 +18,10 @@ p { font-size: 130%; margin-bottom: 6px; }
 .ui-widget-content:focus { outline: none; }
 .ui-menu a, .ui-menu-item a { color: #FFF; }
 .ui-menu a strong, .ui-menu-item a strong { border-bottom: 1px solid #FFF; }
+.ui-menu .ui-menu-item a { line-height: 1.1; }
 input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 
+.combobox { vertical-align: bottom; }
 #intro .combobox { width: 295px; }
 #chatroom .combobox { width: 480px; }
 
@@ -39,6 +41,6 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 #user_submit { margin: 0; vertical-align: bottom; }
 
 #chatroom { height: 440px; padding: 20px; width: 600px; }
-#chat_window { background: #FFF; float: left; height: 340px; width: 400px; }
-#online_users { background: #FFF; float: right; height: 340px; width: 190px; }
+#chat_window { background: #FFF; float: left; height: 300px; width: 400px; }
+#online_users { background: #FFF; float: right; height: 300px; width: 190px; }
 #chat_form { margin: 14px 0; }
