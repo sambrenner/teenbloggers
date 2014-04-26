@@ -44,5 +44,9 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 #chat_window { background: #FFF; color: #000; float: left; height: 300px; width: 400px; }
 #chat_window .speaker { color: #F30; margin-right: 6px; }
 #chat_window .input .speaker { color: #30F; }
-#online_users { background: #FFF; float: right; height: 300px; width: 190px; }
+
+#online_users_container { background: #FFF; color: #000; float: right; height: 300px; width: 190px; }
+#online_users_container h2 { color: #000; height: 12%; padding: 2% 6px; }
+#online_users { height: 80%; overflow: scroll; padding: 0 6px; }
+
 #chat_form { margin: 2px 0; }

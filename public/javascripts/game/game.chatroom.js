@@ -87,7 +87,9 @@ game.chatroom = (function(window, document) {
     },
 
     addUser: function(user) {
-      _$onlineUsers.append('<li id="user_' + user + '"><a href="http://' + user + '.livejournal.com" target="_blank">' + user + '</a></li>');
+      var you = (user == game.ljdata.data.username) ? ' (you)' : '';
+
+      _$onlineUsers.append('<li id="user_' + user + '"><a href="http://' + user + '.livejournal.com" target="_blank">' + user + '</a>' + you + '</li>');
     },
 
     removeUser: function(user) {
