@@ -9,6 +9,7 @@ var game = require('./routes/game')
 var http = require('http');
 var path = require('path');
 var io = require('socket.io');
+var auth = express.basicAuth(process.env.RESETUSER, process.env.RESETAUTH);
 
 var app = express();
 
@@ -31,7 +32,7 @@ if ('development' == app.get('env')) {
 
 app.get('/pos/:text', routes.pos);
 app.get('/lj/search/:term', routes.searchJournals);
-app.get('/lj/available/reset', routes.resetAvailableJournals);
+app.get('/lj/available/reset', auth, routes.resetAvailableJournals);
 app.get('/lj/available', routes.getAvailableJournals);
 
 app.get('/lj/:username', routes.getJournal);

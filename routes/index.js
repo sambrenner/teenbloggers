@@ -207,6 +207,8 @@ exports.resetAvailableJournals = function(req, res) {
     ]
   }, {
     '$set': { 'available': true }
+  }, {
+    'multi': true
   }, function() {
     res.send('{"success":true}');
   });
