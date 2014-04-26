@@ -1,7 +1,7 @@
 body { background: url('/images/bg.jpg') 0 0 repeat; font-family: 'VT323'; }
 
-::selection { background: #FFF; color: #000; }
-::-moz-selection { background: #FFF; color: #000; }
+::selection { background: #F30; color: #FFF; }
+::-moz-selection { background: #F30; color: #FFF; }
 
 .hidden { display: none; }
 .error { background-color: #F30; color: #000; }
@@ -41,6 +41,8 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 #user_submit { margin: 0; vertical-align: bottom; }
 
 #chatroom { height: 440px; padding: 20px; width: 600px; }
-#chat_window { background: #FFF; float: left; height: 300px; width: 400px; }
+#chat_window { background: #FFF; color: #000; float: left; height: 300px; width: 400px; }
+#chat_window .speaker { color: #F30; margin-right: 6px; }
+#chat_window .input .speaker { color: #30F; }
 #online_users { background: #FFF; float: right; height: 300px; width: 190px; }
 #chat_form { margin: 2px 0; }
