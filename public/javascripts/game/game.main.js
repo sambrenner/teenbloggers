@@ -216,8 +216,6 @@ game.main = (function(window, document) {
 
           game.sockets.init();
           game.sockets.selectUser(game.ljdata.data.username);
-
-          game.chatroom.initSentenceAvailability();
         }
       })
     ];

@@ -73,8 +73,8 @@
              minLength: 0,
 
              appendTo: wrapper,
-             source: $.proxy( this, "_linkSelectList" )
-
+             source: $.proxy( this, "_linkSelectList" ),
+             autoFocus: this.options.autoFocus
           });
 
          $( "<button>" )

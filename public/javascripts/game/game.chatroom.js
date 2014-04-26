@@ -2,7 +2,7 @@ var game = game || {};
 
 game.chatroom = (function(window, document) {
   var _$chatSection, _$chatWindow, _$availableSentences, _$chatForm, _$onlineUsers, _$chatSubmit;
-  var _$combobox, _$dropdownBtn, _$dropdownUl;
+  var _$combobox, _$dropdownBtn, _$dropdownUl, _$dropdownInput;
   var _sentenceInterval, _dropdownIsOpen;
 
   var _cacheSelectors = function() {
@@ -23,6 +23,8 @@ game.chatroom = (function(window, document) {
 
         self.addMessage('input', game.ljdata.data.username, message);
         game.sockets.sendMessage(message);
+
+        _updateCombobox();
       }
     });
   };
@@ -36,9 +38,10 @@ game.chatroom = (function(window, document) {
   };
 
   var _initCombobox = function() {
-    _$combobox = _$availableSentences.combobox({noInput: true});
+    window.mycombobox = _$combobox = _$availableSentences.combobox({noInput: true, autoFocus: true});
     _$dropdownBtn = _$chatForm.find('button');
     _$dropdownUl = _$chatForm.find('ul');
+    _$dropdownInput = _$chatForm.find('input[type="text"]');
 
     _$chatSubmit.css('height', _$chatSection.find('.combobox').outerHeight());
 
@@ -55,11 +58,16 @@ game.chatroom = (function(window, document) {
       }
     });
   };
+
+  var _updateCombobox = function() {
+    _$dropdownInput.val(_$combobox.find('option:selected').val());
+  };
   
   var self = {
     init: function() {
       _cacheSelectors();
 
+      self.initSentenceAvailability();
       _initCombobox();
       _bindFormInteraction();
     },
