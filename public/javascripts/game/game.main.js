@@ -121,14 +121,36 @@ game.main = (function(window, document) {
       //LEVEL 2: Flirting Couple
       new Scummesque.Level({
         backgroundUrl: '/images/game/flirtingcouple.gif',
+        domElementOverlay: $('#couple'),
         enter: function() {
           _scummesque.setActiveLevel(2);
+
+          var $call = this.domElementOverlay.find('.call');
+          var $response = this.domElementOverlay.find('.response');
+
+          var coupleResponses = [
+            'Huh?',
+            'What are you talking about?',
+            'Get lost.',
+            'I don\'t understand you.',
+            'Uhh.. what?'
+          ];
 
           $window.trigger({
             type: 'display_console_choices',
             choices: game.ljdata.getRandomSentences(4),
-            choiceClickHandler: function() {
-              console.log('choice click');
+            choiceClickHandler: function(choice) {
+              $call.empty().text(choice).removeClass('hidden');
+
+              setTimeout(function() {
+                $call.addClass('hidden');
+                $response.empty().text(coupleResponses[Math.floor(Math.random() * coupleResponses.length)]).removeClass('hidden');
+
+                setTimeout(function() {
+                  $response.addClass('hidden');
+                }, 3000);
+              }, 3000);
+
             },
             exitHandler: function() {
               $window.trigger('unlock_console');

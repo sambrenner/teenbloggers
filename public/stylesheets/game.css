@@ -40,6 +40,11 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 #character_select form { margin: 14px 0; }
 #user_submit { margin: 0; vertical-align: bottom; }
 
+#couple { width: 640px; }
+#couple p { font-size: 150%; max-width: 300px; padding: 3px; position: absolute; }
+#couple .call { background-color: #F30; color: #FFF; left: 30px; top: 30px; }
+#couple .response { background-color: #30F; color: #FFF; right: 30px; text-align: right; top: 100px; }
+
 #chatroom { height: 440px; padding: 20px; width: 600px; }
 #chat_window { background: #FFF; color: #000; float: left; height: 300px; width: 400px; }
 #chat_window .speaker { color: #F30; margin-right: 6px; }

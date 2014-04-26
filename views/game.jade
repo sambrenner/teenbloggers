@@ -47,7 +47,9 @@ block content
         input(id="user_submit" type="submit", value="Select")
       p(id="character_error" class="error hidden")
 
-  section(id="console" class="hidden")
+  section(id="couple" class="hidden")
+    p(class="call" class="hidden")
+    p(class="response" class="hidden")
 
   section(id="chatroom" class="hidden")
     section(class="container")
@@ -61,6 +63,8 @@ block content
       select(id="available_sentences")
 
       input(id="chat_submit" type="submit" value="Say It!")
+
+  section(id="console" class="hidden")
 
 block footer
   script(type="text/javascript").

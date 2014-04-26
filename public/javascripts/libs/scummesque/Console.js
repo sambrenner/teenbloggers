@@ -41,7 +41,11 @@ Scummesque.Console.prototype.displayChoiceOptions = function(choices, choiceClic
   var $list = $('<ul></ul>');
 
   for (var i = 0; i < choices.length; i++) {
-    var $choice = $('<li><a>' + choices[i] + '</a></li>').on('click', choiceClickHandler);
+    var choice = choices[i];
+
+    var $choice = $('<li><a>' + choice + '</a></li>').on('click', function() {
+      choiceClickHandler($(this).find('a').text());
+    });
     $list.append($choice);
   };
 

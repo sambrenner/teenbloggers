@@ -32,11 +32,10 @@ Scummesque.Level.prototype.init = function() {
       this.initActor();
     }
 
-    if(this.domElementOverlay) this.domElementOverlay.removeClass('hidden');
-
     this.inited = true;
   }
 
+  if(this.domElementOverlay) this.domElementOverlay.removeClass('hidden');
   if(this.enter) this.enter();
 };
 
