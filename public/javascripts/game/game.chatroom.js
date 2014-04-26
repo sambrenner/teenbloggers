@@ -34,31 +34,34 @@ game.chatroom = (function(window, document) {
       _$availableSentences.append('<option>' + game.ljdata.getRandomSentence() + '</option>');
     }
   };
+
+  var _initCombobox = function() {
+    _$combobox = _$availableSentences.combobox({noInput: true});
+    _$dropdownBtn = _$chatForm.find('button');
+    _$dropdownUl = _$chatForm.find('ul');
+
+    _$chatSubmit.css('height', _$chatSection.find('.combobox').outerHeight());
+
+    _dropdownIsOpen = false;
+
+    _$chatSection.on('click', function(e) {
+      var $target = $(e.target);
+
+      if($target[0] != _$dropdownBtn[0] && $target.parent()[0] != _$dropdownBtn[0] || _dropdownIsOpen) {
+        _dropdownIsOpen = false;
+        _$dropdownUl.css('display', 'none');
+      } else {
+        _dropdownIsOpen = true;
+      }
+    });
+  };
   
   var self = {
     init: function() {
       _cacheSelectors();
 
-      _$combobox = _$availableSentences.combobox({noInput: true});
-      _$dropdownBtn = _$chatForm.find('button');
-      _$dropdownUl = _$chatForm.find('ul');
-
-      _$chatSubmit.css('height', _$chatSection.find('.combobox').outerHeight());
-
+      _initCombobox();
       _bindFormInteraction();
-
-      _dropdownIsOpen = false;
-
-      _$chatSection.on('click', function(e) {
-        var $target = $(e.target);
-
-        if($target[0] != _$dropdownBtn[0] && $target.parent()[0] != _$dropdownBtn[0] || _dropdownIsOpen) {
-          _dropdownIsOpen = false;
-          _$dropdownUl.css('display', 'none');
-        } else {
-          _dropdownIsOpen = true;
-        }
-      });
     },
 
     addMessage: function(className, speaker, string) {
