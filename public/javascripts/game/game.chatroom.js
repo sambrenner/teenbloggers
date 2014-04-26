@@ -1,12 +1,13 @@
 var game = game || {};
 
 game.chatroom = (function(window, document) {
-  var _$combobox, _$chatSection, _$chatWindow, _$availableSentences, _$chatForm, _$onlineUsers, _$chatSubmit;
+  var _$chatSection, _$chatWindow, _$availableSentences, _$chatForm, _$onlineUsers, _$chatSubmit;
+  var _$combobox, _$dropdownBtn, _$dropdownUl;
   var _sentenceInterval;
 
   var _cacheSelectors = function() {
     _$chatWindow = $('#chat_window');
-    _$chatSection = $('#chat');
+    _$chatSection = $('#chatroom');
     _$chatForm = $('#chat_form');
     _$availableSentences = $('#available_sentences');
     _$onlineUsers = $('#online_users');
@@ -39,9 +40,20 @@ game.chatroom = (function(window, document) {
       _cacheSelectors();
 
       _$combobox = _$availableSentences.combobox({noInput: true});
+      _$dropdownBtn = _$chatForm.find('button');
+      _$dropdownUl = _$chatForm.find('ul');
+
       _$chatSubmit.css('height', _$chatSection.find('.combobox').outerHeight());
 
       _bindFormInteraction();
+
+      _$chatSection.on('click', function(e) {
+        var $target = $(e.target);
+
+        if($target[0] != _$dropdownBtn[0] && $target.parent()[0] != _$dropdownBtn[0]) {
+          _$dropdownUl.css('display', 'none');
+        }
+      });
     },
 
     addMessage: function(className, speaker, string) {
