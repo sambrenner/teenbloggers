@@ -14,15 +14,12 @@ game.sockets = (function (window, document) {
       _socket.on('allusers', function(data) {
         data = data.clients;
 
-        console.log('allusers', data);
-        
         for (var i = 0; i < data.length; i++) {
           game.chatroom.addUser(data[i]);
         };
       });
 
       _socket.on('newuser', function(data) {
-        console.log('newuser', data);
         game.chatroom.addUser(data)
       });
 
