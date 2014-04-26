@@ -1,13 +1,18 @@
 var game = game || {};
 
 game.userselect = (function(window, document) {
-  var _$availableJournals, _$userSubmit, _$characterSelect, _$combobox;
+  var _$availableJournals, _$userSubmit, _$characterSelect, _$combobox, _$usernameText;
 
   var _cacheSelectors = function() {
     _$availableJournals = $('#available_journals');
     _$characterSelect = $('#character_select');
     _$userSubmit = $('#user_submit');
   };
+
+  var _initCombobox = function() {
+    _$combobox = _$availableJournals.combobox();
+    _$usernameText = _$characterSelect.find('form input[type="text"]');
+  }
 
   var self = {
     init: function() {
@@ -25,7 +30,9 @@ game.userselect = (function(window, document) {
       });
 
       _$characterSelect.removeClass('hidden');
-      _$combobox = _$availableJournals.combobox();
+
+      _initCombobox();
+
       _$userSubmit.css('height', _$characterSelect.find('.combobox').outerHeight());
       _$characterSelect.addClass('hidden');
     },
@@ -49,7 +56,7 @@ game.userselect = (function(window, document) {
     },
 
     getComboboxValue: function() {
-      return _$combobox.val().trim();
+      return _$usernameText.val().trim();
     }
   };
 
