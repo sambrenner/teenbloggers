@@ -3,7 +3,7 @@ var game = game || {};
 game.chatroom = (function(window, document) {
   var _$chatSection, _$chatWindow, _$availableSentences, _$chatForm, _$onlineUsers, _$chatSubmit;
   var _$combobox, _$dropdownBtn, _$dropdownUl;
-  var _sentenceInterval;
+  var _sentenceInterval, _dropdownIsOpen;
 
   var _cacheSelectors = function() {
     _$chatWindow = $('#chat_window');
@@ -47,11 +47,16 @@ game.chatroom = (function(window, document) {
 
       _bindFormInteraction();
 
+      _dropdownIsOpen = false;
+
       _$chatSection.on('click', function(e) {
         var $target = $(e.target);
 
-        if($target[0] != _$dropdownBtn[0] && $target.parent()[0] != _$dropdownBtn[0]) {
+        if($target[0] != _$dropdownBtn[0] && $target.parent()[0] != _$dropdownBtn[0] || _dropdownIsOpen) {
+          _dropdownIsOpen = false;
           _$dropdownUl.css('display', 'none');
+        } else {
+          _dropdownIsOpen = true;
         }
       });
     },
