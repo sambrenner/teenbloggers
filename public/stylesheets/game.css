@@ -43,4 +43,4 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 #chatroom { height: 440px; padding: 20px; width: 600px; }
 #chat_window { background: #FFF; float: left; height: 300px; width: 400px; }
 #online_users { background: #FFF; float: right; height: 300px; width: 190px; }
-#chat_form { margin: 14px 0; }
+#chat_form { margin: 2px 0; }

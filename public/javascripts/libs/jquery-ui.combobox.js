@@ -105,6 +105,8 @@
 
             };
 
+          this.uiList = this.uiCombo.siblings('ul');
+
          this._on( this._events );
 
       },
@@ -224,12 +226,12 @@
          },
 
          "click .ui-combobox-button" : function( event ) {
-
             this.uiInput.focus();
 
             // close if already visible
-            if (this._wasOpen)
-               return;
+            if (this._wasOpen) {
+              return;
+            }
 
             // pass empty string as value to search for, displaying all results
             this.uiInput.autocomplete("search", "");

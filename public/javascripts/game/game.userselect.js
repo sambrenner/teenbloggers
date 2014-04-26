@@ -37,7 +37,6 @@ game.userselect = (function(window, document) {
           if(data.error) {
             error();
           } else {
-            game.sockets.selectUser(username);
             game.ljdata.data = data;
             success();
           }

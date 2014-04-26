@@ -8,23 +8,26 @@ game.sockets = (function (window, document) {
       _socket = io.connect('/');
 
       _socket.on('message', function(data) {
-        // chatroom.chatwindow.addMessage('response', data.username, data.message);
+        game.chatroom.addMessage('response', data.username, data.message);
       });
 
       _socket.on('allusers', function(data) {
         data = data.clients;
+
+        console.log('allusers', data);
         
         for (var i = 0; i < data.length; i++) {
-          // chatroom.chatwindow.addUser(data[i]);
+          game.chatroom.addUser(data[i]);
         };
       });
 
       _socket.on('newuser', function(data) {
-        // chatroom.chatwindow.addUser(data)
+        console.log('newuser', data);
+        game.chatroom.addUser(data)
       });
 
       _socket.on('userdisconnect', function(data) {
-        // chatroom.chatwindow.removeUser(data);
+        game.chatroom.removeUser(data);
       });
     },
 

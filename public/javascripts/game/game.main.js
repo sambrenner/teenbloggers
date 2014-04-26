@@ -213,6 +213,11 @@ game.main = (function(window, document) {
 
           //offload functionality to game.chatroom.js
           game.chatroom.init();
+
+          game.sockets.init();
+          game.sockets.selectUser(game.ljdata.data.username);
+
+          game.chatroom.initSentenceAvailability();
         }
       })
     ];
@@ -221,8 +226,7 @@ game.main = (function(window, document) {
   var self = {
     init: function() {
       game.ui.init();
-      game.sockets.init();
-
+      
       _levels = _makeLevels();
 
       _scummesque = new Scummesque.Game({
