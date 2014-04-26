@@ -21,6 +21,8 @@ p { font-size: 130%; margin-bottom: 6px; }
 .ui-menu .ui-menu-item a { line-height: 1.1; }
 input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 
+#game canvas { left: 0; position: absolute; top: 0; }
+
 .combobox { vertical-align: bottom; }
 #intro .combobox { width: 295px; }
 #chatroom .combobox { width: 480px; }

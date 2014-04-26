@@ -246,6 +246,7 @@ game.main = (function(window, document) {
   var self = {
     init: function() {
       game.ui.init();
+      game.threejs.init();
       
       _levels = _makeLevels();
 
