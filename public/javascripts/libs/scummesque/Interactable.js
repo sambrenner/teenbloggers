@@ -20,9 +20,12 @@ Scummesque.Interactable.prototype.init = function() {
 
 Scummesque.Interactable.prototype.addEvents = function() {
   var $window = $(window);
+  var $body = $('body');
   var interactable = this;
 
   this.container.addEventListener('mouseover', function() {
+    $body.css('cursor', 'alias');
+
     $window.trigger({
       type: 'display_console_text',
       text: interactable.action + ' ' + interactable.name
@@ -30,6 +33,8 @@ Scummesque.Interactable.prototype.addEvents = function() {
   });
 
   this.container.addEventListener('mouseout', function() {
+    $body.css('cursor', 'inherit');
+
     $window.trigger('hide_console_text');
   });
 
