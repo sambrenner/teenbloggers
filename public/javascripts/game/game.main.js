@@ -147,7 +147,7 @@ game.main = (function(window, document) {
             'What are you talking about?',
             'Get lost.',
             'I don\'t understand you.',
-            'Uhh.. what?'
+            'Uhh... what?'
           ];
 
           $window.trigger({
