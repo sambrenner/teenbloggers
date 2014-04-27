@@ -59,12 +59,14 @@ io.sockets.on('connection', function(socket) {
     socket.set('ljusername', username);
   });
   socket.on('enterchatroom', function() {
-    socket.get('ljusername', function(err, username) {
-      getActiveClients(function(activeClients) {
-        socket.emit('allusers', {clients: activeClients});
+    socket.set('chatting', true, function() {
+      socket.get('ljusername', function(err, username) {
+        getChattingClients(function(chattingClients) {
+          socket.emit('allusers', {clients: chattingClients});
+        });
+
+        socket.broadcast.emit('newuser', username);
       });
-      
-      socket.broadcast.emit('newuser', username);
     });
   });
   socket.on('disconnect', function() {
@@ -76,18 +78,21 @@ io.sockets.on('connection', function(socket) {
   });
 });
 
-function getActiveClients(callback) {
+function getChattingClients(callback) {
   var clients = io.sockets.clients();
-  var activeClients = [];
+  var chattingClients = [];
   var completedClients = 0;
 
   for (var i = 0; i < clients.length; i++) {
     var client = clients[i];
-    client.get('ljusername', function(err, username) {
-      activeClients.push(username);
-
+    client.get('chatting', function(err, chatting) {
       completedClients++;
-      if(completedClients == clients.length) callback(activeClients);
+      if(chatting) {
+        client.get('ljusername', function(err, username) {
+          chattingClients.push(username);
+          if(completedClients == clients.length) callback(chattingClients);
+        });
+      }
     });
   };
 }

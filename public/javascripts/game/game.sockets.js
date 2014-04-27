@@ -3,8 +3,8 @@ var game = game || {};
 game.sockets = (function (window, document) {
   var _socket;
 
-  var _bindSocketEvents = function() {
-  _socket.on('message', function(data) {
+  var _bindChatroomEvents = function() {
+    _socket.on('message', function(data) {
       game.chatroom.addMessage('response', data.username, data.message);
     });
 
@@ -30,7 +30,6 @@ game.sockets = (function (window, document) {
       _socket = io.connect('/');
 
       _socket.on('connect', function() {
-        _bindSocketEvents();
         callback();
       });
     },
@@ -44,6 +43,7 @@ game.sockets = (function (window, document) {
     },
 
     enterChatroom: function() {
+      _bindChatroomEvents();
       _socket.emit('enterchatroom');
     }
   }; 
