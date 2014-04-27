@@ -3,7 +3,7 @@ THREE.MosaicShader = {
   uniforms: {
 
     "tDiffuse": { type: "t", value: null },
-    "size": { type: "f", value: 200.0 }
+    "size": { type: "f", value: 400.0 }
 
   },
 
@@ -29,10 +29,12 @@ THREE.MosaicShader = {
 
     "void main() {",
 
-      "vec2 uv = floor(vUv * size)/size;",
-      //"gl_FragColor = texture2D(tDiffuse, vUv);", //off
-      "gl_FragColor = texture2D(tDiffuse, uv);", //on
-
+      "if(size == 400.0) {",
+        "gl_FragColor = texture2D(tDiffuse, vUv);", //off
+      "} else {",
+        "vec2 uv = floor(vUv * size)/size;",
+        "gl_FragColor = texture2D(tDiffuse, uv);", //on
+      "}",
     "}"
 
   ].join("\n")
