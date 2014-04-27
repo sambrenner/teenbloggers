@@ -65,7 +65,10 @@ game.main = (function(window, document) {
             }
             else {
               game.userselect.loadUser(username, function() {
-                _scummesque.transitionToLevel(1);
+                game.sockets.connect(function() {
+                  game.sockets.selectUser(game.ljdata.data.username);  
+                  _scummesque.transitionToLevel(1);
+                });
               }, function() {
                 $characterError.removeClass('hidden').text('Username invalid, please enter an active LiveJournal username!');
               });
@@ -259,8 +262,7 @@ game.main = (function(window, document) {
           //offload functionality to game.chatroom.js
           game.chatroom.init();
 
-          game.sockets.init();
-          game.sockets.selectUser(game.ljdata.data.username);
+          game.sockets.enterChatroom();
         }
       })
     ];

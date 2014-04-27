@@ -3,28 +3,35 @@ var game = game || {};
 game.sockets = (function (window, document) {
   var _socket;
 
+  var _bindSocketEvents = function() {
+  _socket.on('message', function(data) {
+      game.chatroom.addMessage('response', data.username, data.message);
+    });
+
+    _socket.on('allusers', function(data) {
+      data = data.clients;
+
+      for (var i = 0; i < data.length; i++) {
+        game.chatroom.addUser(data[i]);
+      };
+    });
+
+    _socket.on('newuser', function(data) {
+      game.chatroom.addUser(data)
+    });
+
+    _socket.on('userdisconnect', function(data) {
+      game.chatroom.removeUser(data);
+    });
+  };
+
   var self = {
-    init: function() {
+    connect: function(callback) {
       _socket = io.connect('/');
 
-      _socket.on('message', function(data) {
-        game.chatroom.addMessage('response', data.username, data.message);
-      });
-
-      _socket.on('allusers', function(data) {
-        data = data.clients;
-
-        for (var i = 0; i < data.length; i++) {
-          game.chatroom.addUser(data[i]);
-        };
-      });
-
-      _socket.on('newuser', function(data) {
-        game.chatroom.addUser(data)
-      });
-
-      _socket.on('userdisconnect', function(data) {
-        game.chatroom.removeUser(data);
+      _socket.on('connect', function() {
+        _bindSocketEvents();
+        callback();
       });
     },
 
@@ -35,6 +42,10 @@ game.sockets = (function (window, document) {
     selectUser: function(username) {
       _socket.emit('userselect', username);
     },
+
+    enterChatroom: function() {
+      _socket.emit('enterchatroom');
+    }
   }; 
 
   return self;
