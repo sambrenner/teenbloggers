@@ -62,20 +62,20 @@ Scummesque.Level.prototype.addEvents = function() {
   var $window = $(window);
   var level = this;
 
-  $window.on('interactable_click', function(e) {
-    if(!level.active) return;
+  if(level.interactables) {
+    $window.on('interactable_click', function(e) {
+      if(!level.active) return;
 
-    if(level.actor) {
-      var objCoords = e.mouseEvent.currentTarget.localToGlobal(e.mouseEvent.localX, e.mouseEvent.localY);
-      objCoords = level.background.globalToLocal(objCoords.x, objCoords.y);
-      level.actor.walkToAndTurn({x: objCoords.x}, 80, function() {
-        if(level.slideable) level.checkContainerSlide(level.actor.container.x);
-        e.onFocus();
-      });
-    }
-
-    //e.stopImmediatePropagation();
-  });
+      if(level.actor) {
+        var objCoords = e.mouseEvent.currentTarget.localToGlobal(e.mouseEvent.localX, e.mouseEvent.localY);
+        objCoords = level.background.globalToLocal(objCoords.x, objCoords.y);
+        level.actor.walkToAndTurn({x: objCoords.x}, 80, function() {
+          if(level.slideable) level.checkContainerSlide(level.actor.container.x);
+          e.onFocus();
+        });
+      }
+    });
+  }
 };
 
 Scummesque.Level.prototype.checkContainerSlide = function(actorX) {
