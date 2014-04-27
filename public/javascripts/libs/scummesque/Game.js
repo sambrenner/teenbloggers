@@ -66,7 +66,9 @@ Scummesque.Game.prototype.nextLevel = null;
 Scummesque.Game.prototype.transitionToLevel = function(level) {
   this.nextLevel = this.levels[level];
   if(this.transitionAnimation) this.transitionAnimation(this.currentLevel ? this.currentLevel.transitionOut : false, this.nextLevel.transitionIn);
+};
 
+Scummesque.Game.prototype.continueTransition = function() {
   if(this.currentLevel) {
     this.currentLevel.hideDomElement();
     this.stage.removeChild(this.currentLevel.container);
@@ -76,7 +78,7 @@ Scummesque.Game.prototype.transitionToLevel = function(level) {
   this.stage.addChild(this.nextLevel.container);
 
   this.currentLevel = this.nextLevel;
-};
+}
 
 Scummesque.Game.prototype.enterLevel = function() {
   if(this.currentLevel.enter) this.currentLevel.enter();

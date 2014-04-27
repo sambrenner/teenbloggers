@@ -266,6 +266,55 @@ game.main = (function(window, document) {
     ];
   };
 
+  var _beginTransition = function(thisGame, transitionOut, transitionIn) {
+    //begin ramping of uniform
+    var uniform = {};
+    uniform.val = 400;
+
+    var firstChange = false;
+
+    createjs.Tween.get(uniform).to({val: 1}, transitionOut ? 1000 : 0).on('change', function(e) {
+      if(transitionOut) {
+        game.threejs.setMosaicValue(uniform.val);
+        game.threejs.render();
+      }
+
+      //check first iteration
+      if(!firstChange) {
+        //tell game to start with next level
+        thisGame.continueTransition();
+
+        firstChange = true;
+      }
+
+      //check done
+      if(uniform.val == 1) {
+        game.threejs.updateTexture(function() {
+          _finishTransition(transitionIn);
+        });
+      }
+    });
+  };
+
+  var _finishTransition = function(transitionIn) {
+    //begin reverse ramping of uniform
+    var uniform = {};
+    uniform.val = 1;
+
+    createjs.Tween.get(uniform).to({val: 400}, transitionIn ? 1000 : 0).on('change', function(e) {  
+      if(transitionIn) {
+        game.threejs.setMosaicValue(uniform.val);
+        game.threejs.render();
+      }
+
+      if(uniform.val == 400) {
+        //transition done
+        game.threejs.postTransition();
+        _scummesque.enterLevel();
+      }
+    });
+  };
+
   var self = {
     init: function() {
       game.ui.init();
@@ -285,30 +334,8 @@ game.main = (function(window, document) {
           var thisGame = this;
 
           game.threejs.prepareForTransition();
-          game.threejs.updateTexture();
-
-          //begin ramping of uniform
-          var uniform = {};
-          uniform.val = 400;
-
-          createjs.Tween.get(uniform).to({val: 1}, transitionOut ? 1000 : 0).on('change', function(e) {
-            if(transitionOut) game.threejs.setMosaicValue(uniform.val);
-
-            //check done
-            if(uniform.val == 1) {
-              game.threejs.updateTexture();
-            
-              //begin reverse ramping of uniform
-              createjs.Tween.get(uniform).to({val: 400}, transitionIn ? 1000 : 0).on('change', function(e) {  
-                if(transitionIn) game.threejs.setMosaicValue(uniform.val);
-
-                if(uniform.val == 400) {
-                  //transition done
-                  game.threejs.postTransition();
-                  thisGame.enterLevel();
-                }
-              });
-            }
+          game.threejs.updateTexture(function() {
+            _beginTransition(thisGame, transitionOut, transitionIn);
           });
         }
       });

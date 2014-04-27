@@ -7,7 +7,6 @@ game.threejs = (function(window, document) {
   var _sourceCanvas, _$renderer;
 
   var _render = function() {
-    _animationFrameId = requestAnimationFrame(_render);
     _composer.render();
   };
 
@@ -16,7 +15,7 @@ game.threejs = (function(window, document) {
     var renderTarget = new THREE.WebGLRenderTarget(_width, _height, renderTargetParameters);
 
     _composer = new THREE.EffectComposer(_renderer, renderTarget);
-    _composer.addPass( new THREE.RenderPass(_scene, _camera));
+    _composer.addPass(new THREE.RenderPass(_scene, _camera));
 
     _mosaicShader = new THREE.ShaderPass(THREE.MosaicShader);
     _mosaicShader.renderToScreen = true;
@@ -50,15 +49,16 @@ game.threejs = (function(window, document) {
       _initComposer();
     },
 
-    updateTexture: function() {
+    updateTexture: function(onUpdate) {
       if(_plane) _scene.remove(_plane);
 
       var texture = new THREE.Texture(_sourceCanvas);
-      texture.needsUpdate = true;
-
       var material = new THREE.MeshBasicMaterial({map: texture});
       _plane = new THREE.Mesh(new THREE.PlaneGeometry(_width, _height), material); 
       _scene.add(_plane);
+
+      texture.addEventListener('update', onUpdate);
+      texture.needsUpdate = true;
     },
 
     setMosaicValue: function(value) {
@@ -67,12 +67,14 @@ game.threejs = (function(window, document) {
 
     prepareForTransition: function() {
       _$renderer.show();
-      _render();
     },
 
     postTransition: function() {
       _$renderer.hide();
-      window.cancelAnimationFrame(_animationFrameId);
+    },
+
+    render: function() {
+      _render();
     }
   };
 
