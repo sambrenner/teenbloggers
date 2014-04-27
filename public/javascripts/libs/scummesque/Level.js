@@ -59,10 +59,10 @@ Scummesque.Level.prototype.initActor = function() {
 }
 
 Scummesque.Level.prototype.addEvents = function() {
-  var $window = $(window);
-  var level = this;
+  if(this.interactables) {
+    var $window = $(window);
+    var level = this;
 
-  if(level.interactables) {
     $window.on('interactable_click', function(e) {
       if(!level.active) return;
 
