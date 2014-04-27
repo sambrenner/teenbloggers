@@ -137,6 +137,7 @@ game.main = (function(window, document) {
 
           var $call = this.domElementOverlay.find('.call');
           var $response = this.domElementOverlay.find('.response');
+          this.domElementOverlay.removeClass('hidden');
 
           var coupleResponses = [
             'Huh?',
