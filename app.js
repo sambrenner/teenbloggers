@@ -56,12 +56,15 @@ io.sockets.on('connection', function(socket) {
   });
   socket.on('userselect', function(username) {
     console.log('registered user ' + username);
-    socket.broadcast.emit('newuser', username);
-
-    socket.set('ljusername', username, function() {
+    socket.set('ljusername', username);
+  });
+  socket.on('enterchatroom', function() {
+    socket.get('ljusername', function(err, username) {
       getActiveClients(function(activeClients) {
         socket.emit('allusers', {clients: activeClients});
       });
+      
+      socket.broadcast.emit('newuser', username);
     });
   });
   socket.on('disconnect', function() {
