@@ -1,17 +1,18 @@
 var game = game || {};
 
 game.threejs = (function(window, document) {
-  var _renderer, _camera, _scene, _composer, _plane;
+  var _renderer, _camera, _scene, _composer, _plane, _mosaicShader;
   var _width, _height;
+  var _animationFrameId;
+  var _sourceCanvas, _$renderer;
 
   var _render = function() {
-    requestAnimationFrame(_render);
-    //_composer.render();
-    _renderer.render(_scene, _camera);
+    _animationFrameId = requestAnimationFrame(_render);
+    _composer.render();
   };
 
   var _initComposer = function() {
-    var renderTargetParameters = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBAFormat, stencilBuffer: false };
+    var renderTargetParameters = {minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBAFormat};
     var renderTarget = new THREE.WebGLRenderTarget(_width, _height, renderTargetParameters);
 
     _composer = new THREE.EffectComposer(_renderer, renderTarget);
@@ -23,7 +24,7 @@ game.threejs = (function(window, document) {
   };
 
   var self = {
-    init: function() {
+    init: function(sourceCanvas) {
       var $container = $('#game');
       _width = 640;
       _height = 480;
@@ -40,21 +41,38 @@ game.threejs = (function(window, document) {
       _scene = new THREE.Scene();
       _scene.add(_camera);
 
-      var plane = new THREE.Mesh(new THREE.PlaneGeometry(_width, _height), new THREE.MeshBasicMaterial({color: 0xffff00, side: THREE.DoubleSide}));
-      _scene.add(plane);
-
       _renderer.setSize(_width, _height);
 
-      $container.append(_renderer.domElement);
+      _$renderer = $(_renderer.domElement);
+      $container.append(_$renderer);
 
+      _sourceCanvas = sourceCanvas;
       _initComposer();
+    },
+
+    updateTexture: function() {
+      if(_plane) _scene.remove(_plane);
+
+      var texture = new THREE.Texture(_sourceCanvas);
+      texture.needsUpdate = true;
+
+      var material = new THREE.MeshBasicMaterial({map: texture});
+      _plane = new THREE.Mesh(new THREE.PlaneGeometry(_width, _height), material); 
+      _scene.add(_plane);
+    },
+
+    setMosaicValue: function(value) {
+      _mosaicShader.uniforms['size'].value = value;
+    },
+
+    prepareForTransition: function() {
+      _$renderer.show();
       _render();
     },
 
-    setTexture: function(pixelData) {
-      //_renderer.context gives access to GL calls
-
-      
+    postTransition: function() {
+      _$renderer.hide();
+      window.cancelAnimationFrame(_animationFrameId);
     }
   };
 

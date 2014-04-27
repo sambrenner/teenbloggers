@@ -31,6 +31,7 @@ game.main = (function(window, document) {
       new Scummesque.Level({
         backgroundUrl: '/images/game/establishingshot.gif',
         domElementOverlay: $('#intro'),
+        transitionIn: false,
         enter: function() {
           //_scummesque.setActiveLevel(0);
 
@@ -113,8 +114,17 @@ game.main = (function(window, document) {
             }
           })
         ],
+        enteredOnce: false,
         enter: function() {
           _scummesque.setActiveLevel(1);
+
+          if(!this.enteredOnce) {
+            this.enteredOnce = true;
+            var actor = this.actor;
+            createjs.Tween.get(actor.container).to({x: 60}, 2000).call(function() {
+              actor.sprite.gotoAndPlay('standSide');
+            });
+          }
         }
       }),
 
@@ -220,8 +230,17 @@ game.main = (function(window, document) {
             }
           }),
         ],
+        enteredOnce: false,
         enter: function() {
           _scummesque.setActiveLevel(3);
+
+          if(!this.enteredOnce) {
+            this.enteredOnce = true;
+            var actor = this.actor;
+            createjs.Tween.get(actor.container).to({x: 60}, 2000).call(function() {
+              actor.sprite.gotoAndPlay('standSide');
+            });
+          }
         }
       }),
 
@@ -231,6 +250,9 @@ game.main = (function(window, document) {
         domElementOverlay: $('#chatroom'),
         enter: function() {
           _scummesque.setActiveLevel(4);
+
+          this.domElementOverlay.removeClass('hidden');
+          
           $(window).trigger('hide_console');
 
           //offload functionality to game.chatroom.js
@@ -246,7 +268,7 @@ game.main = (function(window, document) {
   var self = {
     init: function() {
       game.ui.init();
-      game.threejs.init();
+      game.threejs.init(document.getElementById('game_canvas'));
       
       _levels = _makeLevels();
 
@@ -257,7 +279,37 @@ game.main = (function(window, document) {
           domElement: $('#console'),
           defaultText: 'Walk to'
         }),
-        autoStart: true
+        autoStart: true,
+        transitionAnimation: function(transitionOut, transitionIn) {
+          var thisGame = this;
+
+          game.threejs.prepareForTransition();
+          game.threejs.updateTexture();
+
+          //begin ramping of uniform
+          var uniform = {};
+          uniform.val = 400;
+
+          createjs.Tween.get(uniform).to({val: 1}, transitionOut ? 1000 : 0).on('change', function(e) {
+            if(transitionOut) game.threejs.setMosaicValue(uniform.val);
+
+            //check done
+            if(uniform.val == 1) {
+              game.threejs.updateTexture();
+            
+              //begin reverse ramping of uniform
+              createjs.Tween.get(uniform).to({val: 400}, transitionIn ? 1000 : 0).on('change', function(e) {  
+                if(transitionIn) game.threejs.setMosaicValue(uniform.val);
+
+                if(uniform.val == 400) {
+                  //transition done
+                  game.threejs.postTransition();
+                  thisGame.enterLevel();
+                }
+              });
+            }
+          });
+        }
       });
     }
   };

@@ -4,7 +4,10 @@ Scummesque.Level = function(options) {
   for (var o in options) { this[o] = options[o]; }
 
   if(!this.container) this.container = new createjs.Container();
-  if(!this.slideable) this.slideable = false;
+  
+  if(this.slideable === undefined) this.slideable = false;
+  if(this.transitionIn === undefined) this.transitionIn = true;
+  if(this.transitionOut === undefined) this.transitionOut = true;
 
   this.inited = false;
   this.active = false;
@@ -34,9 +37,6 @@ Scummesque.Level.prototype.init = function() {
 
     this.inited = true;
   }
-
-  if(this.domElementOverlay) this.domElementOverlay.removeClass('hidden');
-  if(this.enter) this.enter();
 };
 
 Scummesque.Level.prototype.initActor = function() {
@@ -47,10 +47,6 @@ Scummesque.Level.prototype.initActor = function() {
 
   actor.container.y = 340;
   actor.container.x = -68;
-
-  createjs.Tween.get(actor.container).to({x: 60}, 2000).call(function() {
-    actor.sprite.gotoAndPlay('standSide');
-  });
 
   var container = level.background ? level.background : level.container;
   container.addEventListener('click', function(e) {
