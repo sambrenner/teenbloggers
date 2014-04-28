@@ -110,7 +110,7 @@ game.main = (function(window, document) {
             action: 'Talk to',
             name: 'Flirting Couple',
             imageUrl: '/images/game/people.gif',
-            position: {x: 504, y: 141},
+            position: {x: 480, y: 141},
             onFocus: function() {
               // zoom in on couple
               _scummesque.transitionToLevel(2);
