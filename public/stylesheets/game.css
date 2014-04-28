@@ -27,11 +27,15 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 #intro .combobox { width: 295px; }
 #chatroom .combobox { width: 470px; }
 
-#main_content { background-color: #040404; border: 3px solid #FEFEFE; color: #FEFEFE; height: 480px; overflow: hidden; position: absolute; width: 640px; }
-#main_content .modal { background-color: rgba(0,0,0,0.8); padding: 18px; width: 400px; }
+#main_content { background-color: #040404; border: 3px solid #FEFEFE; color: #000; height: 480px; overflow: hidden; position: absolute; width: 640px; }
+#main_content .modal { background-color: rgba(255,255,255,1); padding: 18px; width: 400px; }
 #main_content > section { position: absolute; }
 
-#console { background-color: #000; bottom: 0; height: 110px; padding: 4px 2%; position: absolute; width: 96%; }
+#welcome { left: 4px; position: absolute; text-indent: -9999em; top: 205px; }
+#welcome h1 { display: none; }
+#welcome a { background: url('/images/game/logo.gif'); display: block; height: 229px; width: 400px; }
+
+#console { background-color: #000; bottom: 0; color: #FFF; height: 110px; padding: 4px 2%; position: absolute; width: 96%; }
 #console { -webkit-transiton: height .5s ease, bottom .5s ease; -moz-transition: height .5s ease, bottom .5s ease; -o-transition: height .5s ease, bottom .5s ease; transition: height .5s ease, bottom .5s ease; }
 #console.hidden { display: block; bottom: -118px; }
 #console ul { position: absolute; }
