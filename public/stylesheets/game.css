@@ -64,3 +64,6 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 #online_users { height: 80%; overflow-x: hidden; overflow-y: scroll; padding: 0 6px; }
 
 #chat_form { margin: 2px 0; }
+
+footer { font-size: 10px; position: absolute; text-align: center; width: 640px; }
+footer a { color: #FFF; }

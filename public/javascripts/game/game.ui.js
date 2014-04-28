@@ -1,11 +1,12 @@
 var game = game || {};
 
 game.ui = (function(window, document) {
-  var _$window, _$gameWindow, _gameWindowHalfHeight;
+  var _$window, _$gameWindow, _$footer, _gameWindowHalfHeight;
 
   var _cacheSelectors = function() {
     _$window = $(window);
     _$gameWindow = $('#main_content');
+    _$footer = $('footer');
 
     _gameWindowHalfHeight = _$gameWindow.height() / 2;
     _gameWindowHalfWidth = _$gameWindow.width() / 2;
@@ -13,8 +14,14 @@ game.ui = (function(window, document) {
 
   var _bindWindowResize = function() {
     _$window.on('resize', function() {
-      _$gameWindow.css('top', Math.max(0,window.innerHeight / 2 - _gameWindowHalfHeight));
-      _$gameWindow.css('left', Math.max(0,window.innerWidth / 2 - _gameWindowHalfWidth));
+      var top = Math.max(0,window.innerHeight / 2 - _gameWindowHalfHeight);
+      var left = Math.max(0,window.innerWidth / 2 - _gameWindowHalfWidth);
+
+      _$gameWindow.css('top', top);
+      _$gameWindow.css('left', left);
+
+      _$footer.css('top', top + 490);
+      _$footer.css('left', left);
     });
 
     _$window.resize();
