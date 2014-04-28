@@ -25,7 +25,7 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 
 .combobox { vertical-align: bottom; }
 #intro .combobox { width: 295px; }
-#chatroom .combobox { width: 480px; }
+#chatroom .combobox { width: 470px; }
 
 #main_content { background-color: #040404; border: 3px solid #FEFEFE; color: #FEFEFE; height: 480px; overflow: hidden; position: absolute; width: 640px; }
 #main_content .modal { background-color: rgba(0,0,0,0.8); padding: 18px; width: 400px; }
@@ -47,12 +47,15 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 #couple .call { background-color: #000; color: #FFF; left: 30px; top: 30px; }
 #couple .response { background-color: #FFF; color: #000; right: 160px; text-align: right; top: 30px; }
 
-#chatroom { height: 440px; padding: 20px; width: 600px; }
-#chat_window { background: #FFF; color: #000; float: left; height: 300px; width: 400px; }
+#chatroom { height: 440px; padding: 48px 25px 0; width: 590px; }
+#chatroom .ui-autocomplete { max-height: 74px; }
+#chatroom .ui-autocomplete li a { font-size: 20px; }
+
+#chat_window { background: rgba(255,255,255,0.8); color: #000; float: left; height: 300px; width: 390px; }
 #chat_window .speaker { color: #F30; margin-right: 6px; }
 #chat_window .input .speaker { color: #30F; }
 
-#online_users_container { background: #FFF; color: #000; float: right; height: 300px; width: 190px; }
+#online_users_container { background: rgba(255,255,255,0.8); color: #000; float: right; height: 300px; width: 190px; }
 #online_users_container h2 { color: #000; height: 12%; padding: 2% 6px; }
 #online_users { height: 80%; overflow-x: hidden; overflow-y: scroll; padding: 0 6px; }
 
