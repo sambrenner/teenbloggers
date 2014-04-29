@@ -27,7 +27,7 @@ game.sockets = (function (window, document) {
 
   var self = {
     connect: function(callback) {
-      _socket = io.connect('//localhost');
+      _socket = io.connect('/');
 
       _socket.on('connect', function() {
         callback();
