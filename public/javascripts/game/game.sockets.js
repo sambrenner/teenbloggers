@@ -27,7 +27,7 @@ game.sockets = (function (window, document) {
 
   var self = {
     connect: function(callback) {
-      _socket = io.connect('/');
+      _socket = io.connect($('body').hasClass('development') ? '/' : 'http://teenbloggers.herokuapp.com');
 
       _socket.on('connect', function() {
         callback();
