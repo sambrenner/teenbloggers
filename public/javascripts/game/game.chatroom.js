@@ -73,7 +73,7 @@ game.chatroom = (function(window, document) {
     },
 
     addMessage: function(className, speaker, string) {
-      _$chatWindow.append($('<li class="' + className + '"></li>').append('<span class="speaker">' + speaker + ':</span>' + string + '<a href="https://twitter.com/share?via=teenbloggersnet&text=' + encodeURIComponent(string) + '" class="twitter-share-button" target="_blank" data-lang="en">Tweet</a>'));
+      _$chatWindow.append($('<li class="' + className + '"></li>').append('<span class="speaker">' + speaker + ':</span>' + string + '<a href="https://twitter.com/share?via=teenbloggersnet&text=' + encodeURIComponent(speaker + ': ' + string) + '" class="twitter-share-button" target="_blank" data-lang="en">Tweet</a>'));
       _$chatWindow.scrollTop(100000);
     },
 
