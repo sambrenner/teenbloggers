@@ -70,7 +70,7 @@ game.main = (function(window, document) {
                   _scummesque.transitionToLevel(1);
                 });
               }, function() {
-                $characterError.removeClass('hidden').text('Username invalid, please enter an active LiveJournal username!');
+                $characterError.removeClass('hidden').text('Username invalid, please enter an extant LiveJournal username!');
               });
             }
           });
