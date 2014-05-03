@@ -79,8 +79,8 @@ Scummesque.Level.prototype.addEvents = function() {
 };
 
 Scummesque.Level.prototype.checkContainerSlide = function(actorX) {
-  if(actorX > 580) this.shiftTo(-296);
-  else if(actorX < 360) this.shiftTo(0);
+  if(actorX > 440) this.shiftTo(-296);
+  else if(actorX < 500) this.shiftTo(0);
 }
 
 Scummesque.Level.prototype.shiftTo = function(x, onComplete) {
