@@ -29,7 +29,7 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 #chatroom .combobox { width: 470px; }
 
 #main_content { background-color: #040404; border: 3px solid #FEFEFE; color: #000; height: 480px; overflow: hidden; position: absolute; width: 640px; }
-#main_content .modal { background-color: rgba(255,255,255,1); padding: 18px; width: 400px; }
+#main_content .modal { background-color: rgba(255,255,255,1); border: 2px solid #000; padding: 18px; width: 400px; }
 #main_content > section { position: absolute; }
 
 #welcome { left: 4px; position: absolute; text-indent: -9999em; top: 205px; }
