@@ -5,7 +5,6 @@
 
 var express = require('express');
 var routes = require('./routes');
-var game = require('./routes/game')
 var http = require('http');
 var path = require('path');
 var io = require('socket.io');
@@ -39,7 +38,10 @@ app.get('/lj/:username', routes.getJournal);
 app.get('/lj/:username/select', routes.selectJournal);
 app.get('/lj/:username/deselect', routes.deselectJournalWeb);
 
-app.get('/game', game.index);
+// app.get('/game', game.index);
+app.get('/', function(req, res) {
+  res.render('game', { title: 'Adventures of Teen Bloggers', env: app.get('env') });
+});
 
 var server = http.createServer(app);
 io = io.listen(server);
