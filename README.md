@@ -1,11 +1,8 @@
-Chatbot a Day
+Adventures of Teen Bloggers
 ============
 
-I'm building a chatbot a day (almost). Currently they all live as static pages in the `public` directory. This repo also contains a server that I'll be using to add the illusion of intelligence to new chatbots.
+Adventures of Teen Bloggers is a game that lets you re-animate the forgotten online identities of thousands of former adolescent bloggers and vicariously experience their innermost thoughts.
 
-[Go chat with some of them now](http://chatbots.herokuapp.com) or run the server yourself:
+Play the game [here](http://teenbloggers.net)!
 
-1. `git clone https://github.com/sambrenner/chatbot-a-day.git`
-* `npm install`
-* `node app`
-* [Visit the server](http://localhost:3000/)
+It is my thesis project at [NYU's Interactive Telecommunications Program](http://itp.nyu.edu/itp/) in the Spring of 2014. Live everything, it's a work in progress. [Here are some of my next steps](https://github.com/sambrenner/teenbloggers/issues?state=open). Full documentation to come.
