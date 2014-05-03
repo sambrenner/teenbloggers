@@ -9,6 +9,7 @@ var http = require('http');
 var path = require('path');
 var io = require('socket.io');
 var auth = express.basicAuth(process.env.RESETUSER, process.env.RESETAUTH);
+var validator = require('validator');
 
 var app = express();
 
@@ -53,7 +54,7 @@ server.listen(app.get('port'), function(){
 io.sockets.on('connection', function(socket) {
   socket.on('message', function(message) {
     socket.get('ljusername', function(err, username) { 
-      socket.broadcast.emit('message', {username: username, message: message.text});
+      socket.broadcast.emit('message', {username: username, message: validator.escape(message.text)});
     });
   });
   socket.on('userselect', function(username) {
@@ -91,7 +92,7 @@ function getChattingClients(callback) {
       completedClients++;
       if(chatting) {
         client.get('ljusername', function(err, username) {
-          chattingClients.push(username);
+          chattingClients.push(validator.escape(username));
           if(completedClients == clients.length) callback(chattingClients);
         });
       }
