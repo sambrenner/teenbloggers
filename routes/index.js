@@ -156,7 +156,7 @@ exports.searchJournals = function(req, res) {
       var sentence = matchingSentences[Math.floor(Math.random() * matchingSentences.length)];
 
       //return it
-      res.end({ username: speaker.username, sentence: sentence });
+      res.end('{ "username":"' + speaker.username + '", "sentence":"' + sentence.text + '"}');
     } else {
       res.end({ error: 1 });
     }
