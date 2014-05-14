@@ -138,6 +138,7 @@ exports.getJournal = function(req, res) {
 exports.searchJournals = function(req, res) {
   //hello shep!
   res.setHeader("Access-Control-Allow-Origin", "http://shep.info");
+  res.setHeader("Content-Type", "application/json");
 
   var searchRegex = new RegExp('\\b' + validator.escape(req.params.term) + '\\b', 'i');
 
@@ -156,7 +157,7 @@ exports.searchJournals = function(req, res) {
       var sentence = matchingSentences[Math.floor(Math.random() * matchingSentences.length)];
 
       //return it
-      res.end('{ "username":"' + speaker.username + '", "sentence":"' + sentence.text + '"}');
+      res.end('{ "username":"' + escape(speaker.username) + '", "sentence":"' + escape(sentence.text) + '"}');
     } else {
       res.end({ error: 1 });
     }
