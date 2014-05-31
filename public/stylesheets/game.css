@@ -56,7 +56,7 @@ input::-moz-focus-inner, button::-moz-focus-inner { border: 0; padding: 0; }
 #chatroom .ui-autocomplete { max-height: 74px; }
 #chatroom .ui-autocomplete li a { font-size: 20px; }
 
-#chat_window { background: rgba(255,255,255,0.8); color: #000; float: left; height: 300px; width: 390px; }
+#chat_window { background: rgba(255,255,255,0.8); color: #000; float: left; height: 300px; overflow-y: scroll; width: 390px; }
 #chat_window .speaker { color: #F30; margin-right: 6px; }
 #chat_window .input .speaker { color: #30F; }
 

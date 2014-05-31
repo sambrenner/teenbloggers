@@ -141,6 +141,10 @@ exports.getJournal = function(req, res) {
 };
 
 exports.searchJournals = function(req, res) {
+  //hello shep!
+  res.setHeader("Access-Control-Allow-Origin", "http://shep.info");
+  res.setHeader("Content-Type", "application/json");
+
   var searchRegex = new RegExp('\\b' + validator.escape(req.params.term) + '\\b', 'i');
 
   db.livejournals.find({ 'sentences': { '$elemMatch': { text: searchRegex } } }, { 'username': 1, 'sentences.text': 1 }, function(err, data) {
@@ -158,9 +162,9 @@ exports.searchJournals = function(req, res) {
       var sentence = matchingSentences[Math.floor(Math.random() * matchingSentences.length)];
 
       //return it
-      res.send({ username: speaker.username, sentence: sentence });
+      res.end('{ "username":"' + escape(speaker.username) + '", "sentence":"' + escape(sentence.text) + '"}');
     } else {
-      res.send({ error: 1 });
+      res.end({ error: 1 });
     }
   });
 };
