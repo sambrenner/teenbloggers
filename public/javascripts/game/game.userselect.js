@@ -42,14 +42,13 @@ game.userselect = (function(window, document) {
         url: '/lj/' + username + '/select',
         success: function(data) {
           if(data.error) {
-            error();
+            error(data.error);
           } else {
             game.ljdata.data = data;
             success();
           }
         },
-        error: function(e) {
-          console.log(e);
+        error: function() {
           error();
         }
       });

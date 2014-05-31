@@ -16,6 +16,11 @@ var _loadJournalCorpus = function(username, callback) {
           var items = r.rss.channel[0].item;
           var corpus = '';
           
+          if(!items) {
+            callback(null, 'posts_error');
+            return;
+          }
+
           for(var i=0; i<items.length; i++) {
             var item = items[i];
             var stripOptions = {

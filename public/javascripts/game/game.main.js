@@ -69,8 +69,11 @@ game.main = (function(window, document) {
                   game.sockets.selectUser(game.ljdata.data.username);  
                   _scummesque.transitionToLevel(1);
                 });
-              }, function() {
-                $characterError.removeClass('hidden').text('Username invalid, please enter an extant LiveJournal username!');
+              }, function(e) {
+                if(e == 'posts_error')
+                  $characterError.removeClass('hidden').text('This user has no public posts. How wise! Please choose another.');
+                else
+                  $characterError.removeClass('hidden').text('Username invalid, please enter an extant LiveJournal username!');
               });
             }
           });
