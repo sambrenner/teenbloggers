@@ -86,7 +86,7 @@ var _extractSentences = function(corpus) {
 var _getJournal = function(username, select, success, failure) {
   db.livejournals.findAndModify({
       'query': {'username': username },
-      'update': {'$set': {'available': !select}},
+      'update': {'$set': {'available': select}},
       'new': true
     }, function(err, livejournal) {
     if(err||!livejournal) {
@@ -131,7 +131,7 @@ exports.pos = function(req, res){
 };
 
 exports.getJournal = function(req, res) {
-  _getJournal(req.params.username, false, function(data) {
+  _getJournal(req.params.username, true, function(data) {
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(data));
   }, function(error) {
