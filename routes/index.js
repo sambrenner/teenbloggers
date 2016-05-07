@@ -91,7 +91,7 @@ var _getJournal = function(username, select, success, failure) {
       'new': true
     }, function(err, livejournal) {
     if(err||!livejournal) {
-      console.log('livejournal ' + username + ' not found. getting and saving')
+      //console.log('livejournal ' + username + ' not found. getting and saving')
 
       _loadJournalCorpus(username, function(livejournal, error) {
         if(!error) {
@@ -205,7 +205,7 @@ exports.getAvailableJournals = function(req, res) {
   }, {
     'username': 1
   }, function(err, data) {
-	  console.log(err);
+    //console.log(err);
     res.send(data);
   });
 };
