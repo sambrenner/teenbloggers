@@ -204,6 +204,7 @@ exports.getAvailableJournals = function(req, res) {
   }, {
     'username': 1
   }, function(err, data) {
+	  console.log(err);
     res.send(data);
   });
 };
