@@ -1,6 +1,7 @@
 var dbUrl = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'localhost:27017';
 var collections = ['livejournals'];
-var db = require('mongojs').connect(dbUrl, collections);
+var mongojs = require('mongojs');
+var db = mongojs(dbUrl, collections, {authMechanism: 'ScramSHA1'});
 var validator = require('validator');
 
 var _loadJournalCorpus = function(username, callback) {
