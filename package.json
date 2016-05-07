@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "teenbloggers",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,8 +12,8 @@
     "request": "*",
     "xml2js": "*",
     "htmlstrip-native": "*",
-    "mongojs": "*",
+    "mongojs": "0.12.0",
     "validator": "*",
-    "socket.io": "*"
+    "socket.io": "0.9.15"
   }
 }
